@@ -28,10 +28,10 @@ export default function Home() {
       <Navigation />
       <HeroSection />
       <FeaturesSection />
-      <CliOptionsSection />
       <TutorialSection />
+      <CliOptionsSection />
       <TemplatesSection />
-      <RoadmapSection />
+      {/* <RoadmapSection /> */}
       <CommunitySection />
       <Footer />
     </div>

@@ -1,4 +1,5 @@
 import { Github, Twitter } from "lucide-react";
+import logo from "../../../public/initrajs-logo.png"
 
 export default function Footer() {
   return (
@@ -8,7 +9,7 @@ export default function Footer() {
           <div>
             <div className="flex items-center space-x-2 mb-4">
               <img 
-                src="/attached_assets/Untitled design_1754249144069.png" 
+                src={logo} 
                 alt="InitraJS Logo" 
                 className="w-8 h-8 object-contain"
               />

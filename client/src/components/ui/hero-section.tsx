@@ -4,6 +4,7 @@ import { Rocket, Github, Copy, Check } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useGSAP } from "@/hooks/use-gsap";
+import logo from "../../../public/initrajs-logo.png"
 
 export default function HeroSection() {
   const { toast } = useToast();
@@ -100,9 +101,9 @@ export default function HeroSection() {
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
         {/* Logo */}
-        <div ref={logoRef} className="w-32 h-32 mx-auto mb-12 relative">
+        <div ref={logoRef} className="w-40 h-40 mx-auto mb-12 relative">
           <img 
-            src="/attached_assets/Untitled design_1754249144069.png" 
+            src={logo}
             alt="InitraJS Logo" 
             className="w-full h-full object-contain drop-shadow-2xl"
           />
@@ -145,7 +146,7 @@ export default function HeroSection() {
             className="px-8 py-4 glass-effect hover:bg-white/10 border-border hover:border-primary transition-all duration-300"
             asChild
           >
-            <a href="https://github.com/initrajs/initrajs" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/blessedrajp/initraJs" target="_blank" rel="noopener noreferrer">
               <Github className="w-5 h-5 mr-2" />
               View on GitHub
             </a>

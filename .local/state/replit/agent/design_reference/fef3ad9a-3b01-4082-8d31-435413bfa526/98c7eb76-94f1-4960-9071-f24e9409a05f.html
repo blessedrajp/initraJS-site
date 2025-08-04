@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InitraJS - Fullstack Scaffolding CLI for Modern Web Development</title>
+    <meta name="description" content="Zero Config. Maximum Productivity. Build React, Next.js, and Node.js apps in minutes with InitraJS CLI.">
+    <meta property="og:title" content="InitraJS - Fullstack Scaffolding CLI">
+    <meta property="og:description" content="Zero Config. Maximum Productivity. Build React, Next.js, and Node.js apps in minutes.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://initrajs.dev">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                        'mono': ['JetBrains Mono', 'monospace']
+                    },
+                    colors: {
+                        'primary-orange': '#FF6B35',
+                        'primary-blue': '#4A90E2',
+                        'coral': '#FF8A80',
+                        'primary-purple': '#9C27B0',
+                        'electric-blue': '#00E5FF',
+                        'warm-yellow': '#FFD600',
+                        'dark-gray': '#1A1A1A'
+                    },
+                    animation: {
+                        'float': 'float 3s ease-in-out infinite',
+                        'sketch-draw': 'sketch-draw 2s ease-in-out infinite',
+                        'pulse-glow': 'pulse-glow 2s ease-in-out infinite'
+                    }
+                }
+            }
+        };
+    </script>
+
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes sketch-draw {
+            0%, 100% { stroke-dashoffset: 0; }
+            50% { stroke-dashoffset: 10; }
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 107, 53, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(255, 107, 53, 0.6); }
+        }
+
+        .sketch-border {
+            position: relative;
+        }
+        
+        .sketch-border::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #FF6B35, #4A90E2, #FF8A80, #9C27B0);
+            border-radius: 12px;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        .terminal-cursor::after {
+            content: '|';
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        .code-playground {
+            background: linear-gradient(135deg, #1e1e1e 0%, #2d2d2d 100%);
+        }
+
+        #three-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -10;
+            opacity: 0.3;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-dark-gray font-sans overflow-x-hidden">
+    <canvas id="three-background"></canvas>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b border-gray-200">
+        <!-- @COMPONENT: Navigation [responsive, sticky header] -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-primary-orange to-primary-blue rounded-lg flex items-center justify-center sketch-border">
+                        <span class="text-white font-bold text-xl">I</span>
+                    </div>
+                    <span class="font-bold text-xl">InitraJS</span>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#features" class="text-gray-600 hover:text-primary-orange transition-colors duration-200">Features</a>
+                    <a href="#playground" class="text-gray-600 hover:text-primary-orange transition-colors duration-200">Playground</a>
+                    <a href="#templates" class="text-gray-600 hover:text-primary-orange transition-colors duration-200">Templates</a>
+                    <a href="#roadmap" class="text-gray-600 hover:text-primary-orange transition-colors duration-200">Roadmap</a>
+                    <a href="https://github.com/initrajs/initrajs" class="text-gray-600 hover:text-primary-orange transition-colors duration-200">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                </div>
+
+                <div class="md:hidden">
+                    <button class="text-gray-600 hover:text-primary-orange">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- @END_COMPONENT: Navigation -->
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-white via-blue-50 to-orange-50">
+        <!-- @COMPONENT: HeroSection [animated logo, typewriter effect] -->
+        <div class="max-w-7xl mx-auto text-center">
+            <div class="hero-logo mb-8 animate-float">
+                <div class="inline-block p-8 bg-white rounded-3xl shadow-2xl sketch-border relative">
+                    <!-- Artistic sketch-style logo representation -->
+                    <div class="w-24 h-24 mx-auto relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-primary-orange via-coral to-primary-blue rounded-2xl transform rotate-3"></div>
+                        <div class="absolute inset-1 bg-gradient-to-br from-primary-blue via-primary-purple to-electric-blue rounded-2xl transform -rotate-2"></div>
+                        <div class="absolute inset-2 bg-white rounded-xl flex items-center justify-center">
+                            <span class="text-3xl font-bold bg-gradient-to-r from-primary-orange to-primary-blue bg-clip-text text-transparent">JS</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h1 class="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-dark-gray mb-6 leading-tight">
+                <span class="block">⚡ InitraJS</span>
+                <span class="block text-4xl sm:text-5xl lg:text-6xl bg-gradient-to-r from-primary-orange via-primary-blue to-primary-purple bg-clip-text text-transparent">
+                    Fullstack Scaffolding CLI
+                </span>
+            </h1>
+
+            <p class="text-xl sm:text-2xl text-gray-600 mb-12 max-w-4xl mx-auto leading-relaxed">
+                <span class="font-semibold text-primary-orange">Zero Config.</span> 
+                <span class="font-semibold text-primary-blue">Maximum Productivity.</span><br>
+                Build React, Next.js, and Node.js apps in minutes.
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+                <button data-event="click:scrollToPlayground" class="bg-primary-orange hover:bg-orange-600 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105 animate-pulse-glow">
+                    Get Started
+                </button>
+                <a href="https://github.com/initrajs/initrajs" class="bg-white hover:bg-gray-50 text-dark-gray px-8 py-4 rounded-xl font-semibold text-lg border-2 border-gray-200 transition-all duration-300 transform hover:scale-105">
+                    <i class="fab fa-github mr-2"></i>View on GitHub
+                </a>
+            </div>
+
+            <!-- Installation Command -->
+            <div class="bg-dark-gray rounded-2xl p-6 max-w-2xl mx-auto shadow-2xl">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                        <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                        <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                    </div>
+                    <button id="copy-install" class="text-gray-400 hover:text-white transition-colors duration-200">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
+                <code class="text-electric-blue font-mono text-lg block">
+                    <span class="text-gray-400">$</span> npm install -g initrajs
+                </code>
+            </div>
+        </div>
+        <!-- @END_COMPONENT: HeroSection -->
+    </section>
+
+    <!-- Features Overview -->
+    <section id="features" class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <!-- @COMPONENT: FeaturesGrid [hover animations, icon-based cards] -->
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl sm:text-5xl font-bold text-dark-gray mb-6">
+                    Powerful Features for 
+                    <span class="bg-gradient-to-r from-primary-orange to-primary-blue bg-clip-text text-transparent">Modern Development</span>
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Everything you need to scaffold production-ready applications with zero configuration
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature cards with icons instead of images -->
+                <div class="feature-card bg-gradient-to-br from-white to-orange-50 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 sketch-border">
+                    <div class="w-16 h-16 bg-primary-orange rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-magic text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-dark-gray mb-4">Intelligent Code Generation</h3>
+                    <p class="text-gray-600 leading-relaxed">Smart CLI that generates clean, production-ready code following best practices and modern patterns.</p>
+                </div>
+
+                <div class="feature-card bg-gradient-to-br from-white to-blue-50 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 sketch-border">
+                    <div class="w-16 h-16 bg-primary-blue rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-layer-group text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-dark-gray mb-4">Ready-to-use Templates</h3>
+                    <p class="text-gray-600 leading-relaxed">Pre-built templates for React, Next.js, and Node.js with modern tooling and best practices baked in.</p>
+                </div>
+
+                <div class="feature-card bg-gradient-to-br from-white to-purple-50 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 sketch-border">
+                    <div class="w-16 h-16 bg-primary-purple rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-puzzle-piece text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-dark-gray mb-4">Auto-generated Components</h3>
+                    <p class="text-gray-600 leading-relaxed">Generate components, pages, and API endpoints with a single command, following your project structure.</p>
+                </div>
+
+                <div class="feature-card bg-gradient-to-br from-white to-cyan-50 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 sketch-border">
+                    <div class="w-16 h-16 bg-electric-blue rounded-xl flex items-center justify-center mb-6">
+                        <i class="fab fa-js-square text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-dark-gray mb-4">TypeScript-first</h3>
+                    <p class="text-gray-600 leading-relaxed">Built with TypeScript from the ground up, ensuring type safety and excellent developer experience.</p>
+                </div>
+
+                <div class="feature-card bg-gradient-to-br from-white to-indigo-50 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 sketch-border">
+                    <div class="w-16 h-16 bg-indigo-600 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-palette text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-dark-gray mb-4">MUI Integrated</h3>
+                    <p class="text-gray-600 leading-relaxed">Material-UI components and theming system integrated out of the box for beautiful interfaces.</p>
+                </div>
+
+                <div class="feature-card bg-gradient-to-br from-white to-green-50 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 sketch-border">
+                    <div class="w-16 h-16 bg-green-600 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-shield-alt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-dark-gray mb-4">Auth-ready</h3>
+                    <p class="text-gray-600 leading-relaxed">Authentication system with JWT, protected routes, and user management built-in from day one.</p>
+                </div>
+            </div>
+        </div>
+        <!-- @END_COMPONENT: FeaturesGrid -->
+    </section>
+
+    <!-- Interactive CLI Playground -->
+    <section id="playground" class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 to-blue-50">
+        <!-- @COMPONENT: CodePlayground [interactive CLI simulator] -->
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl sm:text-5xl font-bold text-dark-gray mb-6">
+                    Try InitraJS 
+                    <span class="bg-gradient-to-r from-primary-orange to-primary-blue bg-clip-text text-transparent">Interactive Playground</span>
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Experience the power of InitraJS CLI with our interactive demo. See how easy it is to scaffold your next project.
+                </p>
+            </div>
+
+            <div class="bg-white rounded-3xl shadow-2xl overflow-hidden">
+                <div class="grid lg:grid-cols-2 gap-0">
+                    <!-- Command Input Area -->
+                    <div class="p-8 bg-gradient-to-br from-dark-gray to-gray-800">
+                        <div class="flex items-center space-x-2 mb-6">
+                            <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                            <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                            <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                            <span class="text-gray-400 text-sm ml-4">InitraJS CLI Playground</span>
+                        </div>
+
+                        <!-- Command Examples -->
+                        <div class="space-y-4">
+                            <button class="cli-command block w-full text-left p-4 bg-gray-700 hover:bg-gray-600 rounded-xl transition-colors duration-200" data-command="init">
+                                <code class="text-electric-blue font-mono">
+                                    <span class="text-gray-400">$</span> initrajs init my-app
+                                </code>
+                                <p class="text-gray-400 text-sm mt-2">Initialize a new project</p>
+                            </button>
+
+                            <button class="cli-command block w-full text-left p-4 bg-gray-700 hover:bg-gray-600 rounded-xl transition-colors duration-200" data-command="component">
+                                <code class="text-electric-blue font-mono">
+                                    <span class="text-gray-400">$</span> initrajs c UserProfile
+                                </code>
+                                <p class="text-gray-400 text-sm mt-2">Generate a new component</p>
+                            </button>
+
+                            <button class="cli-command block w-full text-left p-4 bg-gray-700 hover:bg-gray-600 rounded-xl transition-colors duration-200" data-command="page">
+                                <code class="text-electric-blue font-mono">
+                                    <span class="text-gray-400">$</span> initrajs page dashboard
+                                </code>
+                                <p class="text-gray-400 text-sm mt-2">Create a new page</p>
+                            </button>
+
+                            <button class="cli-command block w-full text-left p-4 bg-gray-700 hover:bg-gray-600 rounded-xl transition-colors duration-200" data-command="api">
+                                <code class="text-electric-blue font-mono">
+                                    <span class="text-gray-400">$</span> initrajs api users
+                                </code>
+                                <p class="text-gray-400 text-sm mt-2">Generate API endpoints</p>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Output Preview Area -->
+                    <div class="p-8 bg-white">
+                        <h3 class="text-xl font-bold text-dark-gray mb-6 flex items-center">
+                            <i class="fas fa-folder-open text-primary-orange mr-3"></i>
+                            Generated Structure
+                        </h3>
+                        
+                        <div id="playground-output" class="space-y-2 font-mono text-sm">
+                            <!-- @STATE: playgroundOutput:string = default structure -->
+                            <div class="flex items-center text-gray-600">
+                                <i class="fas fa-folder text-primary-blue mr-2"></i>
+                                <span>my-app/</span>
+                            </div>
+                            <div class="flex items-center text-gray-600 ml-4">
+                                <i class="fas fa-folder text-primary-blue mr-2"></i>
+                                <span>src/</span>
+                            </div>
+                            <div class="flex items-center text-gray-600 ml-8">
+                                <i class="fas fa-folder text-primary-blue mr-2"></i>
+                                <span>components/</span>
+                            </div>
+                            <div class="flex items-center text-gray-600 ml-8">
+                                <i class="fas fa-folder text-primary-blue mr-2"></i>
+                                <span>pages/</span>
+                            </div>
+                            <div class="flex items-center text-gray-600 ml-8">
+                                <i class="fas fa-folder text-primary-blue mr-2"></i>
+                                <span>api/</span>
+                            </div>
+                            <div class="flex items-center text-gray-600 ml-4">
+                                <i class="far fa-file-code text-gray-400 mr-2"></i>
+                                <span>package.json</span>
+                            </div>
+                            <div class="flex items-center text-gray-600 ml-4">
+                                <i class="far fa-file-code text-gray-400 mr-2"></i>
+                                <span>tsconfig.json</span>
+                            </div>
+                        </div>
+
+                        <!-- Generated Code Preview -->
+                        <div class="mt-8 bg-gray-50 rounded-xl p-6">
+                            <h4 class="font-semibold text-dark-gray mb-4">Generated Code Preview:</h4>
+                            <pre class="text-sm text-gray-600 overflow-x-auto"><code id="code-preview">// Select a command to see generated code
+// Click on any CLI command to the left
+
+console.log('Welcome to InitraJS! 🚀');</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- @END_COMPONENT: CodePlayground -->
+    </section>
+
+    <!-- Templates Showcase -->
+    <section id="templates" class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <!-- @COMPONENT: TemplatesGrid [icon-based template cards] -->
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl sm:text-5xl font-bold text-dark-gray mb-6">
+                    <span class="bg-gradient-to-r from-primary-orange to-primary-blue bg-clip-text text-transparent">Production-Ready</span> Templates
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Choose from carefully crafted templates that follow industry best practices and modern development patterns.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- React Template -->
+                <div class="template-card bg-gradient-to-br from-blue-50 to-cyan-50 p-8 rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 sketch-border">
+                    <div class="text-center mb-6">
+                        <div class="w-20 h-20 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fab fa-react text-white text-3xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-dark-gray">React Template</h3>
+                    </div>
+                    
+                    <div class="space-y-3 mb-8">
+                        <div class="flex items-center text-gray-600">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Vite + Hot Reload</span>
+                        </div>
+                        <div class="flex items-center text-gray-600">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Material-UI Components</span>
+                        </div>
+                        <div class="flex items-center text-gray-600">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Redux Toolkit</span>
+                        </div>
+                        <div class="flex items-center text-gray-600">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>TypeScript Ready</span>
+                        </div>
+                        <div class="flex items-center text-gray-600">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>ESLint + Prettier</span>
+                        </div>
+                    </div>
+
+                    <button class="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-xl font-semibold transition-colors duration-200">
+                        Use Template
+                    </button>
+                </div>
+
+                <!-- Next.js Template -->
+                <div class="template-card bg-gradient-to-br from-gray-50 to-slate-100 p-8 rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 sketch-border">
+                    <div class="text-center mb-6">
+                        <div class="w-20 h-20 bg-gradient-to-br from-gray-700 to-black rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <span class="text-white font-bold text-2xl">▲</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-dark-gray">Next.js Template</h3>
+                    </div>
+                    
+                    <div class="space-y-3 mb-8">
+                        <div class="flex items-center text-gray-600">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>App Router + RSC</span>
+                        </div>
+                        <div class="flex items-center text-gray-600">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Auth Context</span>
+                        </div>
+                        <div class="flex items-center text-gray-600">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>API Routes</span>
+                        </div>
+                        <div class="flex items-center text-gray-600">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>SEO Optimized</span>
+                        </div>
+                        <div class="flex items-center text-gray-600">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Tailwind CSS</span>
+                        </div>
+                    </div>
+
+                    <button class="w-full bg-gray-800 hover:bg-gray-900 text-white py-3 rounded-xl font-semibold transition-colors duration-200">
+                        Use Template
+                    </button>
+                </div>
+
+                <!-- Node.js Template -->
+                <div class="template-card bg-gradient-to-br from-green-50 to-emerald-50 p-8 rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 sketch-border">
+                    <div class="text-center mb-6">
+                        <div class="w-20 h-20 bg-gradient-to-br from-green-500 to-green-700 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fab fa-node-js text-white text-3xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-dark-gray">Node.js Backend</h3>
+                    </div>
+                    
+                    <div class="space-y-3 mb-8">
+                        <div class="flex items-center text-gray-600">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Express MVC Pattern</span>
+                        </div>
+                        <div class="flex items-center text-gray-600">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>JWT Authentication</span>
+                        </div>
+                        <div class="flex items-center text-gray-600">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>DTOs & Validation</span>
+                        </div>
+                        <div class="flex items-center text-gray-600">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Service Layer</span>
+                        </div>
+                        <div class="flex items-center text-gray-600">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>API Documentation</span>
+                        </div>
+                    </div>
+
+                    <button class="w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded-xl font-semibold transition-colors duration-200">
+                        Use Template
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- @END_COMPONENT: TemplatesGrid -->
+    </section>
+
+    <!-- Roadmap Section -->
+    <section id="roadmap" class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-purple-50 to-pink-50">
+        <!-- @COMPONENT: RoadmapTimeline [animated progress indicators] -->
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl sm:text-5xl font-bold text-dark-gray mb-6">
+                    What's Coming Next in 
+                    <span class="bg-gradient-to-r from-primary-purple to-coral bg-clip-text text-transparent">InitraJS</span>
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    We're constantly evolving. Here's what's on our roadmap to make InitraJS even more powerful.
+                </p>
+            </div>
+
+            <div class="space-y-12">
+                <!-- In Progress -->
+                <div class="roadmap-section">
+                    <h3 class="text-2xl font-bold text-primary-purple mb-8 flex items-center">
+                        <div class="w-4 h-4 bg-primary-purple rounded-full mr-4 animate-pulse"></div>
+                        In Progress
+                    </h3>
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="bg-white p-6 rounded-xl shadow-lg sketch-border">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-database text-primary-purple text-xl mr-3"></i>
+                                <h4 class="font-semibold text-dark-gray">Prisma/MongoDB Integration</h4>
+                            </div>
+                            <p class="text-gray-600 text-sm">Database schema generation and ORM setup with one command.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-lg sketch-border">
+                            <div class="flex items-center mb-4">
+                                <i class="fab fa-docker text-primary-purple text-xl mr-3"></i>
+                                <h4 class="font-semibold text-dark-gray">Docker Templates</h4>
+                            </div>
+                            <p class="text-gray-600 text-sm">Containerized applications with Docker and docker-compose configs.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-lg sketch-border">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-cogs text-primary-purple text-xl mr-3"></i>
+                                <h4 class="font-semibold text-dark-gray">CI/CD GitHub Actions</h4>
+                            </div>
+                            <p class="text-gray-600 text-sm">Automated deployment pipelines and testing workflows.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Planned -->
+                <div class="roadmap-section">
+                    <h3 class="text-2xl font-bold text-coral mb-8 flex items-center">
+                        <div class="w-4 h-4 bg-coral rounded-full mr-4"></div>
+                        Planned
+                    </h3>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="bg-white p-6 rounded-xl shadow-lg sketch-border">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-project-diagram text-coral text-xl mr-3"></i>
+                                <h4 class="font-semibold text-dark-gray">GraphQL API</h4>
+                            </div>
+                            <p class="text-gray-600 text-sm">GraphQL server templates with resolvers and schema generation.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-lg sketch-border">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-mobile-alt text-coral text-xl mr-3"></i>
+                                <h4 class="font-semibold text-dark-gray">PWA Support</h4>
+                            </div>
+                            <p class="text-gray-600 text-sm">Progressive Web App capabilities with service workers.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-lg sketch-border">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-plug text-coral text-xl mr-3"></i>
+                                <h4 class="font-semibold text-dark-gray">CLI Plugins</h4>
+                            </div>
+                            <p class="text-gray-600 text-sm">Extensible plugin system for custom generators.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-lg sketch-border">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-sitemap text-coral text-xl mr-3"></i>
+                                <h4 class="font-semibold text-dark-gray">Monorepo Setups</h4>
+                            </div>
+                            <p class="text-gray-600 text-sm">Nx and Lerna powered monorepo configurations.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- @END_COMPONENT: RoadmapTimeline -->
+    </section>
+
+    <!-- Community Section -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-dark-gray text-white">
+        <!-- @COMPONENT: CommunitySection [animated social links] -->
+        <div class="max-w-7xl mx-auto text-center">
+            <h2 class="text-4xl sm:text-5xl font-bold mb-6">
+                Join the 
+                <span class="bg-gradient-to-r from-primary-orange to-primary-blue bg-clip-text text-transparent">InitraJS Community</span>
+            </h2>
+            <p class="text-xl text-gray-300 mb-12 max-w-3xl mx-auto">
+                Connect with fellow developers, contribute to the project, and help shape the future of fullstack scaffolding.
+            </p>
+
+            <div class="grid md:grid-cols-4 gap-8 mb-16">
+                <a href="https://github.com/initrajs/initrajs" class="community-link bg-gray-800 hover:bg-gray-700 p-8 rounded-2xl transition-all duration-300 transform hover:-translate-y-2">
+                    <i class="fab fa-github text-4xl mb-4 text-gray-300"></i>
+                    <h3 class="font-semibold text-lg mb-2">GitHub</h3>
+                    <p class="text-gray-400 text-sm">Contribute code, report issues, and follow development</p>
+                </a>
+
+                <a href="https://github.com/initrajs/initrajs/discussions" class="community-link bg-gray-800 hover:bg-gray-700 p-8 rounded-2xl transition-all duration-300 transform hover:-translate-y-2">
+                    <i class="fas fa-comments text-4xl mb-4 text-primary-blue"></i>
+                    <h3 class="font-semibold text-lg mb-2">Discussions</h3>
+                    <p class="text-gray-400 text-sm">Ask questions, share ideas, and get help from the community</p>
+                </a>
+
+                <a href="https://twitter.com/initrajs" class="community-link bg-gray-800 hover:bg-gray-700 p-8 rounded-2xl transition-all duration-300 transform hover:-translate-y-2">
+                    <i class="fab fa-twitter text-4xl mb-4 text-primary-blue"></i>
+                    <h3 class="font-semibold text-lg mb-2">Twitter</h3>
+                    <p class="text-gray-400 text-sm">Stay updated with the latest news and announcements</p>
+                </a>
+
+                <a href="https://github.com/sponsors/blessedraj" class="community-link bg-gray-800 hover:bg-gray-700 p-8 rounded-2xl transition-all duration-300 transform hover:-translate-y-2">
+                    <i class="fas fa-heart text-4xl mb-4 text-coral"></i>
+                    <h3 class="font-semibold text-lg mb-2">Sponsor</h3>
+                    <p class="text-gray-400 text-sm">Support the project development and maintenance</p>
+                </a>
+            </div>
+
+            <!-- Installation Banner -->
+            <div class="bg-gradient-to-r from-primary-orange to-primary-blue p-8 rounded-3xl">
+                <h3 class="text-2xl font-bold mb-4">Ready to get started?</h3>
+                <div class="bg-black/20 rounded-xl p-4 mb-6">
+                    <code class="text-lg font-mono">
+                        npm install -g initrajs<br>
+                        npx initrajs init
+                    </code>
+                </div>
+                <button class="bg-white text-dark-gray px-8 py-3 rounded-xl font-semibold hover:bg-gray-100 transition-colors duration-200">
+                    Get Started Now
+                </button>
+            </div>
+        </div>
+        <!-- @END_COMPONENT: CommunitySection -->
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white py-12 px-4 sm:px-6 lg:px-8 border-t border-gray-200">
+        <!-- @COMPONENT: Footer [social links, legal info] -->
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-br from-primary-orange to-primary-blue rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold">I</span>
+                        </div>
+                        <span class="font-bold text-xl">InitraJS</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">Fullstack scaffolding CLI for modern web development</p>
+                    <div class="flex space-x-4">
+                        <a href="https://github.com/initrajs/initrajs" class="text-gray-400 hover:text-primary-orange transition-colors duration-200">
+                            <i class="fab fa-github text-xl"></i>
+                        </a>
+                        <a href="https://www.npmjs.com/package/initrajs" class="text-gray-400 hover:text-primary-orange transition-colors duration-200">
+                            <i class="fab fa-npm text-xl"></i>
+                        </a>
+                        <a href="https://twitter.com/initrajs" class="text-gray-400 hover:text-primary-orange transition-colors duration-200">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold text-dark-gray mb-4">Documentation</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/docs/getting-started" class="text-gray-600 hover:text-primary-orange transition-colors duration-200">Getting Started</a></li>
+                        <li><a href="/docs/cli-commands" class="text-gray-600 hover:text-primary-orange transition-colors duration-200">CLI Commands</a></li>
+                        <li><a href="/docs/templates" class="text-gray-600 hover:text-primary-orange transition-colors duration-200">Templates</a></li>
+                        <li><a href="/docs/configuration" class="text-gray-600 hover:text-primary-orange transition-colors duration-200">Configuration</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold text-dark-gray mb-4">Community</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/roadmap" class="text-gray-600 hover:text-primary-orange transition-colors duration-200">Roadmap</a></li>
+                        <li><a href="/contributing" class="text-gray-600 hover:text-primary-orange transition-colors duration-200">Contributing</a></li>
+                        <li><a href="https://github.com/initrajs/initrajs/discussions" class="text-gray-600 hover:text-primary-orange transition-colors duration-200">Discussions</a></li>
+                        <li><a href="https://github.com/initrajs/initrajs/issues" class="text-gray-600 hover:text-primary-orange transition-colors duration-200">Issues</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold text-dark-gray mb-4">Support</h4>
+                    <ul class="space-y-2">
+                        <li><a href="https://github.com/sponsors/blessedraj" class="text-gray-600 hover:text-primary-orange transition-colors duration-200">GitHub Sponsors</a></li>
+                        <li><a href="https://www.patreon.com/blessedraj" class="text-gray-600 hover:text-primary-orange transition-colors duration-200">Patreon</a></li>
+                        <li><a href="/docs/troubleshooting" class="text-gray-600 hover:text-primary-orange transition-colors duration-200">Troubleshooting</a></li>
+                        <li><a href="/docs/faq" class="text-gray-600 hover:text-primary-orange transition-colors duration-200">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-600 mb-4 md:mb-0">
+                    © 2024 InitraJS. Licensed under MIT. Made with ❤️ by <a href="https://github.com/blessedraj" class="text-primary-orange hover:underline">Blessed Raj P</a>
+                </p>
+                <div class="flex space-x-6">
+                    <a href="/privacy" class="text-gray-600 hover:text-primary-orange transition-colors duration-200">Privacy</a>
+                    <a href="/terms" class="text-gray-600 hover:text-primary-orange transition-colors duration-200">Terms</a>
+                    <a href="/security" class="text-gray-600 hover:text-primary-orange transition-colors duration-200">Security</a>
+                </div>
+            </div>
+        </div>
+        <!-- @END_COMPONENT: Footer -->
+    </footer>
+
+    <script>
+        // TODO: Implement business logic, API calls, and state management
+        (function() {
+            // GSAP Registration
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Three.js Background Setup
+            function initThreeBackground() {
+                const canvas = document.getElementById('three-background');
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
+                
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                
+                // Create floating particles
+                const geometry = new THREE.SphereGeometry(0.1, 8, 8);
+                const materials = [
+                    new THREE.MeshBasicMaterial({ color: 0xFF6B35 }),
+                    new THREE.MeshBasicMaterial({ color: 0x4A90E2 }),
+                    new THREE.MeshBasicMaterial({ color: 0xFF8A80 }),
+                    new THREE.MeshBasicMaterial({ color: 0x9C27B0 })
+                ];
+                
+                const particles = [];
+                for (let i = 0; i < 50; i++) {
+                    const particle = new THREE.Mesh(geometry, materials[Math.floor(Math.random() * materials.length)]);
+                    particle.position.set(
+                        Math.random() * 20 - 10,
+                        Math.random() * 20 - 10,
+                        Math.random() * 20 - 10
+                    );
+                    particles.push(particle);
+                    scene.add(particle);
+                }
+                
+                camera.position.z = 5;
+                
+                function animate() {
+                    requestAnimationFrame(animate);
+                    
+                    particles.forEach(particle => {
+                        particle.rotation.x += 0.01;
+                        particle.rotation.y += 0.01;
+                        particle.position.y += Math.sin(Date.now() * 0.001 + particle.position.x) * 0.01;
+                    });
+                    
+                    renderer.render(scene, camera);
+                }
+                
+                animate();
+                
+                // Handle resize
+                window.addEventListener('resize', () => {
+                    camera.aspect = window.innerWidth / window.innerHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(window.innerWidth, window.innerHeight);
+                });
+            }
+
+            // Initialize Three.js background
+            initThreeBackground();
+
+            // GSAP Animations
+            gsap.from(".hero-logo", {
+                duration: 1.5,
+                y: 100,
+                opacity: 0,
+                ease: "back.out(1.7)"
+            });
+
+            gsap.from("h1", {
+                duration: 1,
+                y: 50,
+                opacity: 0,
+                delay: 0.3,
+                ease: "power3.out"
+            });
+
+            // Feature cards animation
+            gsap.from(".feature-card", {
+                scrollTrigger: ".feature-card",
+                duration: 0.8,
+                y: 50,
+                opacity: 0,
+                stagger: 0.2,
+                ease: "power3.out"
+            });
+
+            // Template cards animation
+            gsap.from(".template-card", {
+                scrollTrigger: ".template-card",
+                duration: 0.8,
+                scale: 0.8,
+                opacity: 0,
+                stagger: 0.2,
+                ease: "back.out(1.7)"
+            });
+
+            // Playground Interactivity
+            const commandButtons = document.querySelectorAll('.cli-command');
+            const playgroundOutput = document.getElementById('playground-output');
+            const codePreview = document.getElementById('code-preview');
+
+            const commandOutputs = {
+                init: {
+                    structure: `
+                        <div class="flex items-center text-green-400"><i class="fas fa-folder text-primary-blue mr-2"></i><span>my-app/</span></div>
+                        <div class="flex items-center text-gray-600 ml-4"><i class="fas fa-folder text-primary-blue mr-2"></i><span>src/</span></div>
+                        <div class="flex items-center text-gray-600 ml-8"><i class="fas fa-folder text-primary-blue mr-2"></i><span>components/</span></div>
+                        <div class="flex items-center text-gray-600 ml-8"><i class="fas fa-folder text-primary-blue mr-2"></i><span>pages/</span></div>
+                        <div class="flex items-center text-gray-600 ml-8"><i class="fas fa-folder text-primary-blue mr-2"></i><span>hooks/</span></div>
+                        <div class="flex items-center text-gray-600 ml-8"><i class="fas fa-folder text-primary-blue mr-2"></i><span>utils/</span></div>
+                        <div class="flex items-center text-gray-600 ml-4"><i class="far fa-file-code text-gray-400 mr-2"></i><span>package.json</span></div>
+                        <div class="flex items-center text-gray-600 ml-4"><i class="far fa-file-code text-gray-400 mr-2"></i><span>tsconfig.json</span></div>
+                        <div class="flex items-center text-gray-600 ml-4"><i class="far fa-file-code text-gray-400 mr-2"></i><span>vite.config.ts</span></div>
+                    `,
+                    code: `// Generated App.tsx
+import React from 'react';
+import { ThemeProvider } from '@mui/material/styles';
+import { Provider } from 'react-redux';
+import { store } from './store';
+import { theme } from './theme';
+import Router from './Router';
+
+function App() {
+  return (
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <Router />
+      </ThemeProvider>
+    </Provider>
+  );
+}
+
+export default App;`
+                },
+                component: {
+                    structure: `
+                        <div class="flex items-center text-gray-600"><i class="fas fa-folder text-primary-blue mr-2"></i><span>src/</span></div>
+                        <div class="flex items-center text-gray-600 ml-4"><i class="fas fa-folder text-primary-blue mr-2"></i><span>components/</span></div>
+                        <div class="flex items-center text-green-400 ml-8"><i class="far fa-file-code text-green-400 mr-2"></i><span>UserProfile.tsx</span></div>
+                        <div class="flex items-center text-green-400 ml-8"><i class="far fa-file-code text-green-400 mr-2"></i><span>UserProfile.test.tsx</span></div>
+                        <div class="flex items-center text-green-400 ml-8"><i class="far fa-file-code text-green-400 mr-2"></i><span>UserProfile.stories.tsx</span></div>
+                        <div class="flex items-center text-green-400 ml-8"><i class="far fa-file-code text-green-400 mr-2"></i><span>index.ts</span></div>
+                    `,
+                    code: `// Generated UserProfile.tsx
+import React from 'react';
+import { Card, CardContent, Avatar, Typography, Box } from '@mui/material';
+
+interface UserProfileProps {
+  user: {
+    id: string;
+    name: string;
+    email: string;
+    avatar?: string;
+  };
+}
+
+export const UserProfile: React.FC<UserProfileProps> = ({ user }) => {
+  return (
+    <Card>
+      <CardContent>
+        <Box display="flex" alignItems="center" gap={2}>
+          <Avatar src={user.avatar} alt={user.name} />
+          <Box>
+            <Typography variant="h6">{user.name}</Typography>
+            <Typography variant="body2" color="text.secondary">
+              {user.email}
+            </Typography>
+          </Box>
+        </Box>
+      </CardContent>
+    </Card>
+  );
+};`
+                },
+                page: {
+                    structure: `
+                        <div class="flex items-center text-gray-600"><i class="fas fa-folder text-primary-blue mr-2"></i><span>src/</span></div>
+                        <div class="flex items-center text-gray-600 ml-4"><i class="fas fa-folder text-primary-blue mr-2"></i><span>pages/</span></div>
+                        <div class="flex items-center text-green-400 ml-8"><i class="far fa-file-code text-green-400 mr-2"></i><span>Dashboard.tsx</span></div>
+                        <div class="flex items-center text-green-400 ml-8"><i class="far fa-file-code text-green-400 mr-2"></i><span>Dashboard.test.tsx</span></div>
+                        <div class="flex items-center text-gray-600 ml-4"><i class="fas fa-folder text-primary-blue mr-2"></i><span>components/</span></div>
+                        <div class="flex items-center text-green-400 ml-8"><i class="far fa-file-code text-green-400 mr-2"></i><span>DashboardStats.tsx</span></div>
+                    `,
+                    code: `// Generated Dashboard.tsx
+import React, { useEffect } from 'react';
+import { Container, Grid, Paper, Typography } from '@mui/material';
+import { useAppDispatch, useAppSelector } from '../hooks/redux';
+import { fetchDashboardData } from '../store/dashboardSlice';
+import { DashboardStats } from '../components/DashboardStats';
+
+export const Dashboard: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const { data, loading, error } = useAppSelector(state => state.dashboard);
+
+  useEffect(() => {
+    dispatch(fetchDashboardData());
+  }, [dispatch]);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+
+  return (
+    <Container maxWidth="lg">
+      <Typography variant="h4" gutterBottom>
+        Dashboard
+      </Typography>
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <Paper>
+            <DashboardStats data={data} />
+          </Paper>
+        </Grid>
+      </Grid>
+    </Container>
+  );
+};`
+                },
+                api: {
+                    structure: `
+                        <div class="flex items-center text-gray-600"><i class="fas fa-folder text-primary-blue mr-2"></i><span>backend/</span></div>
+                        <div class="flex items-center text-gray-600 ml-4"><i class="fas fa-folder text-primary-blue mr-2"></i><span>src/</span></div>
+                        <div class="flex items-center text-gray-600 ml-8"><i class="fas fa-folder text-primary-blue mr-2"></i><span>routes/</span></div>
+                        <div class="flex items-center text-green-400 ml-12"><i class="far fa-file-code text-green-400 mr-2"></i><span>users.route.ts</span></div>
+                        <div class="flex items-center text-gray-600 ml-8"><i class="fas fa-folder text-primary-blue mr-2"></i><span>controllers/</span></div>
+                        <div class="flex items-center text-green-400 ml-12"><i class="far fa-file-code text-green-400 mr-2"></i><span>users.controller.ts</span></div>
+                        <div class="flex items-center text-gray-600 ml-8"><i class="fas fa-folder text-primary-blue mr-2"></i><span>services/</span></div>
+                        <div class="flex items-center text-green-400 ml-12"><i class="far fa-file-code text-green-400 mr-2"></i><span>users.service.ts</span></div>
+                    `,
+                    code: `// Generated users.controller.ts
+import { Request, Response } from 'express';
+import { UsersService } from '../services/users.service';
+import { CreateUserDto, UpdateUserDto } from '../dto/user.dto';
+
+export class UsersController {
+  constructor(private usersService: UsersService) {}
+
+  async getUsers(req: Request, res: Response) {
+    try {
+      const users = await this.usersService.findAll();
+      res.json(users);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+
+  async createUser(req: Request, res: Response) {
+    try {
+      const createUserDto: CreateUserDto = req.body;
+      const user = await this.usersService.create(createUserDto);
+      res.status(201).json(user);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+}`
+                }
+            };
+
+            commandButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const command = this.getAttribute('data-command');
+                    const output = commandOutputs[command];
+                    
+                    // Remove active state from all buttons
+                    commandButtons.forEach(btn => btn.classList.remove('bg-primary-blue'));
+                    // Add active state to clicked button
+                    this.classList.add('bg-primary-blue');
+                    
+                    // Update output with animation
+                    gsap.to([playgroundOutput, codePreview], {
+                        duration: 0.3,
+                        opacity: 0,
+                        onComplete: () => {
+                            playgroundOutput.innerHTML = output.structure;
+                            codePreview.textContent = output.code;
+                            gsap.to([playgroundOutput, codePreview], {
+                                duration: 0.3,
+                                opacity: 1
+                            });
+                        }
+                    });
+                });
+            });
+
+            // Copy to clipboard functionality
+            const copyButton = document.getElementById('copy-install');
+            copyButton.addEventListener('click', function() {
+                navigator.clipboard.writeText('npm install -g initrajs').then(() => {
+                    const icon = this.querySelector('i');
+                    icon.className = 'fas fa-check';
+                    setTimeout(() => {
+                        icon.className = 'fas fa-copy';
+                    }, 2000);
+                });
+            });
+
+            // Smooth scroll for navigation
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Community links hover effects
+            gsap.from(".community-link", {
+                scrollTrigger: ".community-link",
+                duration: 0.6,
+                y: 30,
+                opacity: 0,
+                stagger: 0.1,
+                ease: "power3.out"
+            });
+
+        })();
+    </script>
+</body>
+</html>

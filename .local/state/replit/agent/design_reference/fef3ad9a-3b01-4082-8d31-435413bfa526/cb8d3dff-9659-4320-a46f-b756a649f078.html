@@ -1,0 +1,920 @@
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InitraJS - Fullstack Scaffolding CLI for Modern Web Development</title>
+    <meta name="description" content="Zero Config. Maximum Productivity. Build React, Next.js, and Node.js apps in minutes with InitraJS CLI.">
+    
+    <!-- OpenGraph Meta Tags -->
+    <meta property="og:title" content="InitraJS - Fullstack Scaffolding CLI">
+    <meta property="og:description" content="Zero Config. Maximum Productivity. Build React, Next.js, and Node.js apps in minutes.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://initrajs.com">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                        'mono': ['JetBrains Mono', 'monospace']
+                    },
+                    colors: {
+                        'brand': {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a'
+                        }
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.6s ease-out',
+                        'fade-in': 'fadeIn 0.8s ease-out',
+                        'pulse-glow': 'pulseGlow 2s ease-in-out infinite alternate'
+                    }
+                }
+            }
+        };
+    </script>
+    
+    <style>
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes pulseGlow {
+            from {
+                box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+            }
+            to {
+                box-shadow: 0 0 40px rgba(59, 130, 246, 0.6);
+            }
+        }
+        
+        .code-bg {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 50%, #1e40af 100%);
+        }
+        
+        .glass-effect {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-900 text-white font-sans">
+    <!-- Navigation -->
+    <!-- @COMPONENT: Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-effect border-b border-gray-700/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-terminal text-brand-500 text-xl"></i>
+                    <span class="font-bold text-xl">InitraJS</span>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#features" class="hover:text-brand-400 transition-colors">Features</a>
+                    <a href="#demo" class="hover:text-brand-400 transition-colors">Demo</a>
+                    <a href="#templates" class="hover:text-brand-400 transition-colors">Templates</a>
+                    <a href="#roadmap" class="hover:text-brand-400 transition-colors">Roadmap</a>
+                    <a href="#community" class="hover:text-brand-400 transition-colors">Community</a>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <a href="https://github.com/initrajs/initrajs" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                    <button class="md:hidden text-gray-400 hover:text-white">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- @END_COMPONENT: Navigation -->
+
+    <!-- Hero Section -->
+    <!-- @COMPONENT: HeroSection -->
+    <section class="relative min-h-screen flex items-center hero-gradient overflow-hidden">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute inset-0" style="background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0); background-size: 50px 50px;"></div>
+        </div>
+        
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
+            <div class="text-center animate-fade-in-up">
+                <div class="mb-6">
+                    <span class="inline-flex items-center px-4 py-2 rounded-full bg-brand-500/20 border border-brand-500/30 text-brand-300 text-sm font-medium">
+                        <i class="fas fa-rocket mr-2"></i>
+                        Zero Config. Maximum Productivity.
+                    </span>
+                </div>
+                
+                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+                    <span class="text-white">⚡ InitraJS</span><br>
+                    <span class="bg-gradient-to-r from-brand-400 to-violet-400 bg-clip-text text-transparent">
+                        Fullstack Scaffolding CLI
+                    </span>
+                </h1>
+                
+                <p class="text-xl sm:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed">
+                    Build React, Next.js, and Node.js apps in minutes with intelligent code generation and ready-to-use templates.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+                    <button class="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all transform hover:scale-105 animate-pulse-glow" data-event="click:scrollToDocumentation">
+                        <i class="fas fa-play mr-2"></i>
+                        Get Started
+                    </button>
+                    
+                    <a href="https://github.com/initrajs/initrajs" class="w-full sm:w-auto border-2 border-gray-600 hover:border-brand-500 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all transform hover:scale-105">
+                        <i class="fab fa-github mr-2"></i>
+                        View on GitHub
+                    </a>
+                </div>
+                
+                <!-- Installation Command -->
+                <div class="max-w-2xl mx-auto">
+                    <div class="code-bg rounded-lg p-6 border border-gray-700">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                                <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                                <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                            </div>
+                            <button class="text-gray-400 hover:text-white transition-colors" data-event="click:copyToClipboard">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                        <div class="font-mono text-left">
+                            <div class="text-emerald-400">$ <span class="text-white">npm install -g initrajs</span></div>
+                            <div class="text-emerald-400 mt-2">$ <span class="text-white">npx initrajs init</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: HeroSection -->
+
+    <!-- Features Section -->
+    <!-- @COMPONENT: FeaturesSection -->
+    <section id="features" class="py-24 bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-5xl font-bold mb-6">
+                    Why Choose <span class="text-brand-400">InitraJS</span>?
+                </h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    Accelerate your development workflow with intelligent scaffolding and modern best practices built-in.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature Card 1 -->
+                <div class="bg-gray-900 p-8 rounded-xl border border-gray-700 hover:border-brand-500 transition-all transform hover:scale-105" data-mock="true">
+                    <div class="bg-brand-500/20 w-16 h-16 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-brain text-brand-400 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">Intelligent Code Generation</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        AI-powered scaffolding that understands your project structure and generates contextually appropriate code.
+                    </p>
+                </div>
+                
+                <!-- Feature Card 2 -->
+                <div class="bg-gray-900 p-8 rounded-xl border border-gray-700 hover:border-brand-500 transition-all transform hover:scale-105" data-mock="true">
+                    <div class="bg-violet-500/20 w-16 h-16 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-layer-group text-violet-400 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">Ready-to-use Templates</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        Pre-configured React, Next.js, and Node.js templates with modern tooling and best practices.
+                    </p>
+                </div>
+                
+                <!-- Feature Card 3 -->
+                <div class="bg-gray-900 p-8 rounded-xl border border-gray-700 hover:border-brand-500 transition-all transform hover:scale-105" data-mock="true">
+                    <div class="bg-emerald-500/20 w-16 h-16 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-code text-emerald-400 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">TypeScript-first</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        Built with TypeScript in mind, ensuring type safety and better developer experience from day one.
+                    </p>
+                </div>
+                
+                <!-- Feature Card 4 -->
+                <div class="bg-gray-900 p-8 rounded-xl border border-gray-700 hover:border-brand-500 transition-all transform hover:scale-105" data-mock="true">
+                    <div class="bg-amber-500/20 w-16 h-16 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-shield-alt text-amber-400 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">Auth-ready</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        Integrated authentication system with JWT tokens and modern security practices built-in.
+                    </p>
+                </div>
+                
+                <!-- Feature Card 5 -->
+                <div class="bg-gray-900 p-8 rounded-xl border border-gray-700 hover:border-brand-500 transition-all transform hover:scale-105" data-mock="true">
+                    <div class="bg-pink-500/20 w-16 h-16 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-palette text-pink-400 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">MUI Integrated</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        Material-UI components pre-configured with custom themes and responsive design patterns.
+                    </p>
+                </div>
+                
+                <!-- Feature Card 6 -->
+                <div class="bg-gray-900 p-8 rounded-xl border border-gray-700 hover:border-brand-500 transition-all transform hover:scale-105" data-mock="true">
+                    <div class="bg-indigo-500/20 w-16 h-16 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-server text-indigo-400 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">Modern Backend Architecture</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        MVC pattern with services layer, DTOs, and JWT authentication for scalable backend development.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: FeaturesSection -->
+
+    <!-- How It Works Section -->
+    <!-- @COMPONENT: HowItWorksSection -->
+    <section id="demo" class="py-24 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-5xl font-bold mb-6">See It In Action</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    Watch how InitraJS transforms your development workflow with simple CLI commands.
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <!-- CLI Demo -->
+                <div class="space-y-6">
+                    <div class="code-bg rounded-xl p-6 border border-gray-700">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                                <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                                <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                            </div>
+                            <span class="text-gray-400 text-sm">Terminal</span>
+                        </div>
+                        <div class="font-mono text-sm space-y-2">
+                            <div class="text-emerald-400">$ <span class="text-white">initrajs create my-app --template react</span></div>
+                            <div class="text-gray-400">✓ Creating React application...</div>
+                            <div class="text-gray-400">✓ Installing dependencies...</div>
+                            <div class="text-gray-400">✓ Setting up TypeScript...</div>
+                            <div class="text-gray-400">✓ Configuring MUI theme...</div>
+                            <div class="text-emerald-400">✨ Project created successfully!</div>
+                        </div>
+                    </div>
+                    
+                    <div class="code-bg rounded-xl p-6 border border-gray-700">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                                <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                                <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                            </div>
+                            <span class="text-gray-400 text-sm">Generate Components</span>
+                        </div>
+                        <div class="font-mono text-sm space-y-2">
+                            <div class="text-emerald-400">$ <span class="text-white">initrajs component UserProfile --with-hooks</span></div>
+                            <div class="text-gray-400">✓ Generated UserProfile.tsx</div>
+                            <div class="text-gray-400">✓ Generated UserProfile.test.tsx</div>
+                            <div class="text-gray-400">✓ Generated UserProfile.stories.tsx</div>
+                            <div class="text-emerald-400">✨ Component ready to use!</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Visual Demo -->
+                <div class="bg-gray-800 rounded-xl p-8 border border-gray-700">
+                    <!-- Modern development workspace -->
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600" alt="Modern development workspace with multiple monitors showing code" class="rounded-lg shadow-lg w-full h-64 object-cover mb-6" data-mock-image="true" />
+                    
+                    <h3 class="text-xl font-semibold mb-4">Generated Project Structure</h3>
+                    <div class="space-y-2 font-mono text-sm">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-folder text-brand-400"></i>
+                            <span>src/</span>
+                        </div>
+                        <div class="flex items-center space-x-2 ml-4">
+                            <i class="fas fa-folder text-brand-400"></i>
+                            <span>components/</span>
+                        </div>
+                        <div class="flex items-center space-x-2 ml-8">
+                            <i class="fas fa-file-code text-emerald-400"></i>
+                            <span>UserProfile.tsx</span>
+                        </div>
+                        <div class="flex items-center space-x-2 ml-4">
+                            <i class="fas fa-folder text-brand-400"></i>
+                            <span>hooks/</span>
+                        </div>
+                        <div class="flex items-center space-x-2 ml-4">
+                            <i class="fas fa-folder text-brand-400"></i>
+                            <span>services/</span>
+                        </div>
+                        <div class="flex items-center space-x-2 ml-4">
+                            <i class="fas fa-folder text-brand-400"></i>
+                            <span>utils/</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: HowItWorksSection -->
+
+    <!-- Quickstart Section -->
+    <!-- @COMPONENT: QuickstartSection -->
+    <section class="py-24 bg-gradient-to-br from-gray-800 to-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-5xl font-bold mb-6">Quick Start Guide</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    Get up and running with InitraJS in less than 2 minutes.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Step 1 -->
+                <div class="text-center">
+                    <div class="bg-brand-500 w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mb-6 mx-auto">1</div>
+                    <h3 class="text-xl font-semibold mb-4">Install CLI</h3>
+                    <div class="code-bg rounded-lg p-4 mb-4">
+                        <code class="font-mono text-sm text-emerald-400">npm install -g initrajs</code>
+                    </div>
+                    <p class="text-gray-400">Install the InitraJS CLI globally on your system.</p>
+                </div>
+                
+                <!-- Step 2 -->
+                <div class="text-center">
+                    <div class="bg-brand-500 w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mb-6 mx-auto">2</div>
+                    <h3 class="text-xl font-semibold mb-4">Create Project</h3>
+                    <div class="code-bg rounded-lg p-4 mb-4">
+                        <code class="font-mono text-sm text-emerald-400">initrajs create my-app</code>
+                    </div>
+                    <p class="text-gray-400">Scaffold a new project with your preferred template.</p>
+                </div>
+                
+                <!-- Step 3 -->
+                <div class="text-center">
+                    <div class="bg-brand-500 w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mb-6 mx-auto">3</div>
+                    <h3 class="text-xl font-semibold mb-4">Start Building</h3>
+                    <div class="code-bg rounded-lg p-4 mb-4">
+                        <code class="font-mono text-sm text-emerald-400">cd my-app && npm start</code>
+                    </div>
+                    <p class="text-gray-400">Jump straight into development with zero configuration.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: QuickstartSection -->
+
+    <!-- Templates Showcase -->
+    <!-- @COMPONENT: TemplatesSection -->
+    <section id="templates" class="py-24 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-5xl font-bold mb-6">Production-Ready Templates</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    Choose from our carefully crafted templates, each optimized for different use cases.
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-3 gap-8">
+                <!-- React Template -->
+                <div class="bg-gray-800 rounded-xl overflow-hidden border border-gray-700 hover:border-brand-500 transition-all transform hover:scale-105">
+                    <!-- Coding terminal screenshot -->
+                    <img src="https://images.unsplash.com/photo-1629654297299-c8506221ca97?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400" alt="React code on terminal screen" class="w-full h-48 object-cover" data-mock-image="true" />
+                    
+                    <div class="p-8">
+                        <div class="flex items-center space-x-2 mb-4">
+                            <i class="fab fa-react text-blue-400 text-2xl"></i>
+                            <h3 class="text-xl font-semibold">React Template</h3>
+                        </div>
+                        <p class="text-gray-400 mb-6">Vite + MUI + Redux Toolkit with TypeScript support and modern development tools.</p>
+                        
+                        <div class="space-y-3 mb-6">
+                            <div class="flex items-center space-x-2 text-sm">
+                                <i class="fas fa-check text-emerald-400"></i>
+                                <span>Vite for lightning-fast builds</span>
+                            </div>
+                            <div class="flex items-center space-x-2 text-sm">
+                                <i class="fas fa-check text-emerald-400"></i>
+                                <span>Material-UI components</span>
+                            </div>
+                            <div class="flex items-center space-x-2 text-sm">
+                                <i class="fas fa-check text-emerald-400"></i>
+                                <span>Redux Toolkit for state management</span>
+                            </div>
+                        </div>
+                        
+                        <div class="code-bg rounded-lg p-3">
+                            <code class="font-mono text-sm text-emerald-400">initrajs create --template react</code>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Next.js Template -->
+                <div class="bg-gray-800 rounded-xl overflow-hidden border border-gray-700 hover:border-brand-500 transition-all transform hover:scale-105">
+                    <!-- Developer tools interface -->
+                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400" alt="Next.js development environment on screen" class="w-full h-48 object-cover" data-mock-image="true" />
+                    
+                    <div class="p-8">
+                        <div class="flex items-center space-x-2 mb-4">
+                            <i class="fas fa-layer-group text-violet-400 text-2xl"></i>
+                            <h3 class="text-xl font-semibold">Next.js Template</h3>
+                        </div>
+                        <p class="text-gray-400 mb-6">App Router + AuthContext with server-side rendering and optimal performance.</p>
+                        
+                        <div class="space-y-3 mb-6">
+                            <div class="flex items-center space-x-2 text-sm">
+                                <i class="fas fa-check text-emerald-400"></i>
+                                <span>App Router architecture</span>
+                            </div>
+                            <div class="flex items-center space-x-2 text-sm">
+                                <i class="fas fa-check text-emerald-400"></i>
+                                <span>Built-in authentication</span>
+                            </div>
+                            <div class="flex items-center space-x-2 text-sm">
+                                <i class="fas fa-check text-emerald-400"></i>
+                                <span>SEO optimized structure</span>
+                            </div>
+                        </div>
+                        
+                        <div class="code-bg rounded-lg p-3">
+                            <code class="font-mono text-sm text-emerald-400">initrajs create --template nextjs</code>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Node.js Template -->
+                <div class="bg-gray-800 rounded-xl overflow-hidden border border-gray-700 hover:border-brand-500 transition-all transform hover:scale-105">
+                    <!-- Backend development terminal -->
+                    <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400" alt="Node.js backend code on terminal" class="w-full h-48 object-cover" data-mock-image="true" />
+                    
+                    <div class="p-8">
+                        <div class="flex items-center space-x-2 mb-4">
+                            <i class="fab fa-node-js text-green-400 text-2xl"></i>
+                            <h3 class="text-xl font-semibold">Node.js Backend</h3>
+                        </div>
+                        <p class="text-gray-400 mb-6">Express MVC + JWT + DTOs with robust architecture for scalable APIs.</p>
+                        
+                        <div class="space-y-3 mb-6">
+                            <div class="flex items-center space-x-2 text-sm">
+                                <i class="fas fa-check text-emerald-400"></i>
+                                <span>MVC pattern with services</span>
+                            </div>
+                            <div class="flex items-center space-x-2 text-sm">
+                                <i class="fas fa-check text-emerald-400"></i>
+                                <span>JWT authentication system</span>
+                            </div>
+                            <div class="flex items-center space-x-2 text-sm">
+                                <i class="fas fa-check text-emerald-400"></i>
+                                <span>Data validation with DTOs</span>
+                            </div>
+                        </div>
+                        
+                        <div class="code-bg rounded-lg p-3">
+                            <code class="font-mono text-sm text-emerald-400">initrajs create --template nodejs</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: TemplatesSection -->
+
+    <!-- Code Generation Playground -->
+    <!-- @COMPONENT: PlaygroundSection -->
+    <section class="py-24 bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-5xl font-bold mb-6">Interactive Playground</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    Try InitraJS commands and see what gets generated in real-time.
+                </p>
+            </div>
+            
+            <div class="bg-gray-900 rounded-xl p-8 border border-gray-700">
+                <div class="grid lg:grid-cols-2 gap-8">
+                    <!-- Command Input -->
+                    <div>
+                        <h3 class="text-xl font-semibold mb-4">Try a Command</h3>
+                        <div class="space-y-4">
+                            <div class="code-bg rounded-lg p-4">
+                                <div class="flex items-center space-x-2 mb-2">
+                                    <span class="text-emerald-400">$</span>
+                                    <input type="text" value="initrajs component Button --with-tests" class="bg-transparent text-white font-mono text-sm flex-1 outline-none" data-mock="true" data-implementation="Interactive command input" />
+                                </div>
+                            </div>
+                            
+                            <div class="flex flex-wrap gap-2">
+                                <button class="px-3 py-1 bg-brand-500/20 text-brand-300 rounded text-sm hover:bg-brand-500/30 transition-colors" data-mock="true">
+                                    component UserCard
+                                </button>
+                                <button class="px-3 py-1 bg-brand-500/20 text-brand-300 rounded text-sm hover:bg-brand-500/30 transition-colors" data-mock="true">
+                                    page Dashboard
+                                </button>
+                                <button class="px-3 py-1 bg-brand-500/20 text-brand-300 rounded text-sm hover:bg-brand-500/30 transition-colors" data-mock="true">
+                                    api users
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Generated Files Preview -->
+                    <div>
+                        <h3 class="text-xl font-semibold mb-4">Generated Files</h3>
+                        <div class="space-y-2 font-mono text-sm" data-mock="true">
+                            <div class="flex items-center space-x-2 p-2 bg-gray-800 rounded">
+                                <i class="fas fa-file-code text-emerald-400"></i>
+                                <span>src/components/Button/Button.tsx</span>
+                            </div>
+                            <div class="flex items-center space-x-2 p-2 bg-gray-800 rounded">
+                                <i class="fas fa-file-code text-amber-400"></i>
+                                <span>src/components/Button/Button.test.tsx</span>
+                            </div>
+                            <div class="flex items-center space-x-2 p-2 bg-gray-800 rounded">
+                                <i class="fas fa-file-code text-violet-400"></i>
+                                <span>src/components/Button/Button.stories.tsx</span>
+                            </div>
+                            <div class="flex items-center space-x-2 p-2 bg-gray-800 rounded">
+                                <i class="fas fa-file-code text-blue-400"></i>
+                                <span>src/components/Button/index.ts</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: PlaygroundSection -->
+
+    <!-- Roadmap Section -->
+    <!-- @COMPONENT: RoadmapSection -->
+    <section id="roadmap" class="py-24 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-5xl font-bold mb-6">Roadmap & Upcoming Features</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    See what's coming next to make InitraJS even more powerful.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12">
+                <!-- In Progress -->
+                <div>
+                    <h3 class="text-2xl font-semibold mb-8 flex items-center">
+                        <i class="fas fa-hammer text-amber-400 mr-3"></i>
+                        In Progress
+                    </h3>
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-3 h-3 bg-amber-400 rounded-full mt-2 flex-shrink-0"></div>
+                            <div>
+                                <h4 class="font-semibold mb-2">Prisma/MongoDB Integration</h4>
+                                <p class="text-gray-400 text-sm">Database ORM integration with automatic model generation and migration support.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-4">
+                            <div class="w-3 h-3 bg-amber-400 rounded-full mt-2 flex-shrink-0"></div>
+                            <div>
+                                <h4 class="font-semibold mb-2">Docker Templates</h4>
+                                <p class="text-gray-400 text-sm">Containerized development environment with Docker Compose configurations.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-4">
+                            <div class="w-3 h-3 bg-amber-400 rounded-full mt-2 flex-shrink-0"></div>
+                            <div>
+                                <h4 class="font-semibold mb-2">CI/CD GitHub Actions</h4>
+                                <p class="text-gray-400 text-sm">Automated testing, building, and deployment workflows out of the box.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Planned -->
+                <div>
+                    <h3 class="text-2xl font-semibold mb-8 flex items-center">
+                        <i class="fas fa-lightbulb text-blue-400 mr-3"></i>
+                        Planned
+                    </h3>
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-3 h-3 bg-gray-600 rounded-full mt-2 flex-shrink-0"></div>
+                            <div>
+                                <h4 class="font-semibold mb-2">GraphQL API Support</h4>
+                                <p class="text-gray-400 text-sm">Generate GraphQL schemas, resolvers, and client-side queries automatically.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-4">
+                            <div class="w-3 h-3 bg-gray-600 rounded-full mt-2 flex-shrink-0"></div>
+                            <div>
+                                <h4 class="font-semibold mb-2">PWA Support</h4>
+                                <p class="text-gray-400 text-sm">Progressive Web App templates with offline functionality and service workers.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-4">
+                            <div class="w-3 h-3 bg-gray-600 rounded-full mt-2 flex-shrink-0"></div>
+                            <div>
+                                <h4 class="font-semibold mb-2">CLI Plugins System</h4>
+                                <p class="text-gray-400 text-sm">Extensible plugin architecture for custom generators and community templates.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-4">
+                            <div class="w-3 h-3 bg-gray-600 rounded-full mt-2 flex-shrink-0"></div>
+                            <div>
+                                <h4 class="font-semibold mb-2">Monorepo Setups</h4>
+                                <p class="text-gray-400 text-sm">Multi-package workspace configurations with shared tooling and dependencies.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: RoadmapSection -->
+
+    <!-- Community Section -->
+    <!-- @COMPONENT: CommunitySection -->
+    <section id="community" class="py-24 bg-gradient-to-br from-gray-800 to-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-5xl font-bold mb-6">Join the Community</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    Connect with other developers, contribute to the project, and help shape the future of InitraJS.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                <!-- GitHub -->
+                <a href="https://github.com/initrajs/initrajs" class="bg-gray-900 p-8 rounded-xl border border-gray-700 hover:border-brand-500 transition-all transform hover:scale-105 text-center group" data-mock="true">
+                    <i class="fab fa-github text-4xl text-gray-400 group-hover:text-white transition-colors mb-4"></i>
+                    <h3 class="text-lg font-semibold mb-2">GitHub Issues</h3>
+                    <p class="text-gray-400 text-sm">Report bugs and request features</p>
+                </a>
+                
+                <!-- Discussions -->
+                <a href="https://github.com/initrajs/initrajs/discussions" class="bg-gray-900 p-8 rounded-xl border border-gray-700 hover:border-brand-500 transition-all transform hover:scale-105 text-center group" data-mock="true">
+                    <i class="fas fa-comments text-4xl text-gray-400 group-hover:text-white transition-colors mb-4"></i>
+                    <h3 class="text-lg font-semibold mb-2">Discussions</h3>
+                    <p class="text-gray-400 text-sm">Ask questions and share ideas</p>
+                </a>
+                
+                <!-- Sponsors -->
+                <a href="https://github.com/sponsors/initrajs" class="bg-gray-900 p-8 rounded-xl border border-gray-700 hover:border-brand-500 transition-all transform hover:scale-105 text-center group" data-mock="true">
+                    <i class="fas fa-heart text-4xl text-gray-400 group-hover:text-pink-400 transition-colors mb-4"></i>
+                    <h3 class="text-lg font-semibold mb-2">GitHub Sponsors</h3>
+                    <p class="text-gray-400 text-sm">Support the project development</p>
+                </a>
+                
+                <!-- Discord -->
+                <a href="https://discord.gg/initrajs" class="bg-gray-900 p-8 rounded-xl border border-gray-700 hover:border-brand-500 transition-all transform hover:scale-105 text-center group" data-mock="true">
+                    <i class="fab fa-discord text-4xl text-gray-400 group-hover:text-indigo-400 transition-colors mb-4"></i>
+                    <h3 class="text-lg font-semibold mb-2">Discord Server</h3>
+                    <p class="text-gray-400 text-sm">Chat with the community</p>
+                </a>
+            </div>
+            
+            <!-- Team Collaboration Image -->
+            <div class="text-center">
+                <!-- Tech team collaboration -->
+                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&h=400" alt="Tech team collaborating on software development" class="rounded-xl shadow-lg w-full h-64 object-cover mb-8" data-mock-image="true" />
+                
+                <div class="bg-gray-900 rounded-xl p-8 border border-gray-700 max-w-2xl mx-auto">
+                    <h3 class="text-2xl font-semibold mb-4">Contribute to InitraJS</h3>
+                    <p class="text-gray-400 mb-6">
+                        Help us build the future of fullstack development tooling. Whether you're fixing bugs, adding features, or improving documentation, every contribution matters.
+                    </p>
+                    <a href="https://github.com/initrajs/initrajs/blob/main/CONTRIBUTING.md" class="inline-flex items-center bg-brand-600 hover:bg-brand-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors" data-mock="true">
+                        <i class="fas fa-code-branch mr-2"></i>
+                        Contributing Guide
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: CommunitySection -->
+
+    <!-- Installation Banner -->
+    <!-- @COMPONENT: InstallationBanner -->
+    <section class="py-16 bg-brand-600">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-4">Ready to Get Started?</h2>
+            <p class="text-xl text-brand-100 mb-8 max-w-2xl mx-auto">
+                Install InitraJS now and start building amazing applications in minutes.
+            </p>
+            
+            <div class="max-w-2xl mx-auto">
+                <div class="bg-gray-900 rounded-lg p-6 border border-gray-700 mb-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                            <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                            <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                        </div>
+                        <button class="text-gray-400 hover:text-white transition-colors" data-event="click:copyInstallCommand">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                    <div class="font-mono text-left">
+                        <div class="text-emerald-400">$ <span class="text-white">npm install -g initrajs</span></div>
+                        <div class="text-emerald-400 mt-2">$ <span class="text-white">npx initrajs init</span></div>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="#quickstart" class="w-full sm:w-auto bg-white text-brand-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors">
+                        <i class="fas fa-rocket mr-2"></i>
+                        Get Started Now
+                    </a>
+                    <a href="https://www.npmjs.com/package/initrajs" class="w-full sm:w-auto border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-brand-600 transition-colors" data-mock="true">
+                        <i class="fab fa-npm mr-2"></i>
+                        View on NPM
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: InstallationBanner -->
+
+    <!-- Footer -->
+    <!-- @COMPONENT: Footer -->
+    <footer class="bg-gray-900 border-t border-gray-800 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <!-- Brand -->
+                <div class="md:col-span-2">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fas fa-terminal text-brand-500 text-2xl"></i>
+                        <span class="font-bold text-2xl">InitraJS</span>
+                    </div>
+                    <p class="text-gray-400 mb-6 max-w-md">
+                        The fastest way to scaffold modern fullstack applications with zero configuration and maximum productivity.
+                    </p>
+                    <div class="flex items-center space-x-4">
+                        <a href="https://github.com/initrajs/initrajs" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-github text-xl"></i>
+                        </a>
+                        <a href="https://www.npmjs.com/package/initrajs" class="text-gray-400 hover:text-white transition-colors" data-mock="true">
+                            <i class="fab fa-npm text-xl"></i>
+                        </a>
+                        <a href="https://twitter.com/initrajs" class="text-gray-400 hover:text-white transition-colors" data-mock="true">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#features" class="text-gray-400 hover:text-white transition-colors">Features</a></li>
+                        <li><a href="#demo" class="text-gray-400 hover:text-white transition-colors">Demo</a></li>
+                        <li><a href="#templates" class="text-gray-400 hover:text-white transition-colors">Templates</a></li>
+                        <li><a href="#roadmap" class="text-gray-400 hover:text-white transition-colors">Roadmap</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Resources -->
+                <div>
+                    <h3 class="font-semibold mb-4">Resources</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/docs" class="text-gray-400 hover:text-white transition-colors" data-mock="true">Documentation</a></li>
+                        <li><a href="/contributing" class="text-gray-400 hover:text-white transition-colors" data-mock="true">Contributing</a></li>
+                        <li><a href="https://github.com/initrajs/initrajs/issues" class="text-gray-400 hover:text-white transition-colors" data-mock="true">Issues</a></li>
+                        <li><a href="https://github.com/initrajs/initrajs/discussions" class="text-gray-400 hover:text-white transition-colors" data-mock="true">Discussions</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <div class="text-gray-400 text-sm mb-4 md:mb-0">
+                    © 2024 InitraJS. Licensed under MIT License.
+                </div>
+                <div class="text-gray-400 text-sm">
+                    Made with ❤️ by <span class="text-white font-semibold">Blessed Raj P</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- @END_COMPONENT: Footer -->
+
+    <script>
+        // TODO: Implement business logic, API calls, or state management
+        (function() {
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Copy to clipboard functionality
+            document.querySelectorAll('[data-event*="copyToClipboard"], [data-event*="copyInstallCommand"]').forEach(button => {
+                button.addEventListener('click', function() {
+                    const codeElement = this.closest('.code-bg, .bg-gray-900').querySelector('code, .font-mono');
+                    if (codeElement) {
+                        const text = codeElement.textContent.replace('$ ', '');
+                        navigator.clipboard.writeText(text).then(() => {
+                            // Visual feedback
+                            const icon = this.querySelector('i');
+                            if (icon) {
+                                icon.className = 'fas fa-check';
+                                setTimeout(() => {
+                                    icon.className = 'fas fa-copy';
+                                }, 2000);
+                            }
+                        });
+                    }
+                });
+            });
+
+            // Intersection Observer for animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe elements for animation
+            document.querySelectorAll('.animate-fade-in-up, [class*="hover:scale-105"]').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+                observer.observe(el);
+            });
+
+            // Playground command suggestions
+            document.querySelectorAll('[data-mock="true"] button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const input = document.querySelector('input[value*="initrajs"]');
+                    if (input) {
+                        input.value = `initrajs ${this.textContent.trim()}`;
+                        // Trigger file preview update
+                        // TODO: Implement dynamic file preview generation
+                    }
+                });
+            });
+        })();
+    </script>
+</body>
+</html>

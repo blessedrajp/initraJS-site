@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InitraJS - Fullstack Scaffolding CLI for Modern Web Development</title>
+    <meta name="description" content="Zero Config. Maximum Productivity. Build React, Next.js, and Node.js apps in minutes with InitraJS CLI toolkit.">
+    <meta property="og:title" content="InitraJS - Fullstack Scaffolding CLI">
+    <meta property="og:description" content="Zero Config. Maximum Productivity. Build React, Next.js, and Node.js apps in minutes.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://initrajs.dev">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    dark: {
+                        50: '#2A2A2A',
+                        100: '#1A1A1A',  
+                        200: '#111111',
+                        300: '#0A0A0A'
+                    },
+                    orange: {
+                        400: '#FFA366',
+                        500: '#FF8C42',
+                        600: '#FF6B35'
+                    }
+                },
+                fontFamily: {
+                    'inter': ['Inter', 'system-ui', 'sans-serif']
+                },
+                animation: {
+                    'float': 'float 6s ease-in-out infinite',
+                    'pulse-orange': 'pulse-orange 2s ease-in-out infinite',
+                    'terminal-blink': 'terminal-blink 1s infinite'
+                }
+            }
+        }
+    };
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        @keyframes pulse-orange {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        @keyframes terminal-blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #FF6B35 0%, #FFA366 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .glow-orange {
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.3);
+        }
+        .terminal-window {
+            background: linear-gradient(145deg, #0A0A0A, #111111);
+            border: 1px solid #2A2A2A;
+        }
+    </style>
+</head>
+<body class="bg-dark-300 text-white font-inter overflow-x-hidden">
+    
+    <!-- Navigation -->
+    <!-- @COMPONENT: Navigation [responsive, dark theme, orange accents] -->
+    <nav class="fixed top-0 w-full z-50 bg-dark-300/95 backdrop-blur-md border-b border-dark-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-bolt text-white text-sm"></i>
+                    </div>
+                    <span class="text-xl font-bold">InitraJS</span>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#features" class="text-gray-300 hover:text-orange-500 transition-colors duration-200">Features</a>
+                    <a href="#templates" class="text-gray-300 hover:text-orange-500 transition-colors duration-200">Templates</a>
+                    <a href="#playground" class="text-gray-300 hover:text-orange-500 transition-colors duration-200">Playground</a>
+                    <a href="#roadmap" class="text-gray-300 hover:text-orange-500 transition-colors duration-200">Roadmap</a>
+                    <a href="https://github.com/initrajs" class="text-gray-300 hover:text-orange-500 transition-colors duration-200">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+                
+                <div class="md:hidden">
+                    <button class="text-gray-300 hover:text-orange-500">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- @END_COMPONENT: Navigation -->
+
+    <!-- Hero Section -->
+    <!-- @COMPONENT: HeroSection [animated background, interactive elements] -->
+    <section class="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-16">
+        <!-- Animated Background Particles -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="absolute top-20 left-10 w-2 h-2 bg-orange-500 rounded-full animate-pulse-orange"></div>
+            <div class="absolute top-40 right-20 w-1 h-1 bg-orange-400 rounded-full animate-float" style="animation-delay: 1s;"></div>
+            <div class="absolute bottom-40 left-1/4 w-1.5 h-1.5 bg-orange-600 rounded-full animate-pulse-orange" style="animation-delay: 2s;"></div>
+            <div class="absolute top-1/3 right-1/3 w-1 h-1 bg-orange-500 rounded-full animate-float" style="animation-delay: 3s;"></div>
+        </div>
+        
+        <div class="max-w-6xl mx-auto text-center relative z-10">
+            <!-- Animated Logo -->
+            <div class="mb-8 flex justify-center">
+                <div class="relative">
+                    <div class="w-24 h-24 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center animate-float glow-orange">
+                        <i class="fas fa-bolt text-white text-3xl"></i>
+                    </div>
+                    <div class="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                        <i class="fas fa-check text-white text-xs"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <h1 class="text-4xl sm:text-5xl lg:text-7xl font-bold mb-6 leading-tight">
+                <span class="gradient-text">⚡ InitraJS</span><br>
+                <span class="text-white">Fullstack Scaffolding CLI</span>
+            </h1>
+            
+            <p class="text-xl sm:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
+                Zero Config. Maximum Productivity.<br>
+                <span class="text-orange-400">Build React, Next.js, and Node.js apps in minutes.</span>
+            </p>
+            
+            <!-- CTA Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+                <button class="bg-orange-600 hover:bg-orange-500 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 hover:scale-105 glow-orange">
+                    <i class="fas fa-rocket mr-2"></i>Get Started
+                </button>
+                <button class="border border-gray-600 hover:border-orange-500 text-gray-300 hover:text-orange-400 px-8 py-4 rounded-xl font-semibold transition-all duration-300">
+                    <i class="fab fa-github mr-2"></i>View on GitHub
+                </button>
+            </div>
+            
+            <!-- Installation Command -->
+            <div class="terminal-window rounded-xl p-6 max-w-2xl mx-auto">
+                <div class="flex items-center mb-4">
+                    <div class="flex space-x-2">
+                        <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                        <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                        <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                    </div>
+                    <span class="ml-4 text-gray-400 text-sm">Terminal</span>
+                </div>
+                <div class="font-mono text-left">
+                    <div class="text-green-400">$ <span class="text-white">npm install -g initrajs</span></div>
+                    <div class="text-green-400">$ <span class="text-white">npx initrajs init</span></div>
+                    <div class="text-orange-400 animate-terminal-blink">▊</div>
+                </div>
+                <button class="absolute top-4 right-4 text-gray-400 hover:text-orange-400 transition-colors" data-implementation="Copy to clipboard functionality">
+                    <i class="fas fa-copy"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: HeroSection -->
+
+    <!-- Features Section -->
+    <!-- @COMPONENT: FeaturesSection [grid layout, hover animations] -->
+    <section id="features" class="py-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold mb-4">
+                    Why Choose <span class="gradient-text">InitraJS</span>?
+                </h2>
+                <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+                    Powerful features designed to accelerate your development workflow
+                </p>
+            </div>
+            
+            <!-- @MAP: features.map(feature => ( -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="group bg-dark-200 rounded-xl p-8 border border-dark-50 hover:border-orange-500 transition-all duration-300 hover:scale-105">
+                    <div class="w-12 h-12 bg-orange-600 rounded-lg flex items-center justify-center mb-6 group-hover:bg-orange-500 transition-colors">
+                        <i class="fas fa-magic text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-white">Intelligent Code Generation</h3>
+                    <p class="text-gray-300">AI-powered templates that understand your project structure and generate optimized code automatically.</p>
+                </div>
+                
+                <div class="group bg-dark-200 rounded-xl p-8 border border-dark-50 hover:border-orange-500 transition-all duration-300 hover:scale-105">
+                    <div class="w-12 h-12 bg-orange-600 rounded-lg flex items-center justify-center mb-6 group-hover:bg-orange-500 transition-colors">
+                        <i class="fas fa-layer-group text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-white">Ready-to-use Templates</h3>
+                    <p class="text-gray-300">Pre-configured setups for React, Next.js, and Node.js with best practices built-in.</p>
+                </div>
+                
+                <div class="group bg-dark-200 rounded-xl p-8 border border-dark-50 hover:border-orange-500 transition-all duration-300 hover:scale-105">
+                    <div class="w-12 h-12 bg-orange-600 rounded-lg flex items-center justify-center mb-6 group-hover:bg-orange-500 transition-colors">
+                        <i class="fas fa-shield-alt text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-white">TypeScript-first</h3>
+                    <p class="text-gray-300">Built with TypeScript support from day one. Type safety and developer experience at its finest.</p>
+                </div>
+                
+                <div class="group bg-dark-200 rounded-xl p-8 border border-dark-50 hover:border-orange-500 transition-all duration-300 hover:scale-105">
+                    <div class="w-12 h-12 bg-orange-600 rounded-lg flex items-center justify-center mb-6 group-hover:bg-orange-500 transition-colors">
+                        <i class="fas fa-palette text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-white">MUI Integrated</h3>
+                    <p class="text-gray-300">Material-UI components pre-configured with custom themes and responsive layouts.</p>
+                </div>
+                
+                <div class="group bg-dark-200 rounded-xl p-8 border border-dark-50 hover:border-orange-500 transition-all duration-300 hover:scale-105">
+                    <div class="w-12 h-12 bg-orange-600 rounded-lg flex items-center justify-center mb-6 group-hover:bg-orange-500 transition-colors">
+                        <i class="fas fa-lock text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-white">Auth-ready</h3>
+                    <p class="text-gray-300">JWT authentication, protected routes, and user management scaffolded automatically.</p>
+                </div>
+                
+                <div class="group bg-dark-200 rounded-xl p-8 border border-dark-50 hover:border-orange-500 transition-all duration-300 hover:scale-105">
+                    <div class="w-12 h-12 bg-orange-600 rounded-lg flex items-center justify-center mb-6 group-hover:bg-orange-500 transition-colors">
+                        <i class="fas fa-server text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-white">Modern Backend Architecture</h3>
+                    <p class="text-gray-300">MVC pattern with Services layer, DTOs, and clean separation of concerns.</p>
+                </div>
+            </div>
+            <!-- @END_MAP )) -->
+        </div>
+    </section>
+    <!-- @END_COMPONENT: FeaturesSection -->
+
+    <!-- Interactive CLI Playground -->
+    <!-- @COMPONENT: CLIPlayground [interactive terminal, real-time preview] -->
+    <section id="playground" class="py-20 px-4 sm:px-6 lg:px-8 bg-dark-200">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold mb-4">
+                    Try <span class="gradient-text">InitraJS</span> Commands
+                </h2>
+                <p class="text-xl text-gray-300">
+                    Interactive playground to explore CLI capabilities
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- Terminal Input -->
+                <div class="terminal-window rounded-xl p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="flex space-x-2">
+                            <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                            <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                            <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                        </div>
+                        <span class="ml-4 text-gray-400 text-sm">InitraJS CLI</span>
+                    </div>
+                    
+                    <div class="font-mono text-sm">
+                        <div class="mb-2">
+                            <span class="text-orange-400">➜</span>
+                            <span class="text-blue-400 ml-2">~</span>
+                            <span class="text-white ml-2">initrajs</span>
+                            <span class="text-green-400 ml-2">init</span>
+                            <span class="text-yellow-400 ml-2">my-app</span>
+                        </div>
+                        
+                        <div class="text-gray-300 mb-4">
+                            <div>✨ Creating a new InitraJS project...</div>
+                            <div>📦 Template: React + TypeScript + MUI</div>
+                            <div>🔧 Installing dependencies...</div>
+                            <div class="text-green-400">✅ Project created successfully!</div>
+                        </div>
+                        
+                        <div class="mb-2">
+                            <span class="text-orange-400">➜</span>
+                            <span class="text-blue-400 ml-2">my-app</span>
+                            <span class="text-white ml-2">initrajs</span>
+                            <span class="text-green-400 ml-2">c</span>
+                            <span class="text-yellow-400 ml-2">UserProfile</span>
+                        </div>
+                        
+                        <div class="text-gray-300 mb-4">
+                            <div>🎨 Generating component...</div>
+                            <div>📄 Created: src/components/UserProfile.tsx</div>
+                            <div>📄 Created: src/components/UserProfile.test.tsx</div>
+                            <div class="text-green-400">✅ Component generated!</div>
+                        </div>
+                        
+                        <div class="animate-terminal-blink text-orange-400">▊</div>
+                    </div>
+                </div>
+                
+                <!-- File Structure Preview -->
+                <div class="terminal-window rounded-xl p-6">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-folder text-orange-400 mr-2"></i>
+                        <span class="text-white font-semibold">Generated Structure</span>
+                    </div>
+                    
+                    <div class="font-mono text-sm text-gray-300">
+                        <div class="mb-1">📁 my-app/</div>
+                        <div class="ml-4 mb-1">📁 src/</div>
+                        <div class="ml-8 mb-1">📁 components/</div>
+                        <div class="ml-12 mb-1 text-orange-400">📄 UserProfile.tsx</div>
+                        <div class="ml-12 mb-1 text-orange-400">📄 UserProfile.test.tsx</div>
+                        <div class="ml-8 mb-1">📁 pages/</div>
+                        <div class="ml-8 mb-1">📁 hooks/</div>
+                        <div class="ml-8 mb-1">📁 utils/</div>
+                        <div class="ml-4 mb-1">📁 public/</div>
+                        <div class="ml-4 mb-1">📄 package.json</div>
+                        <div class="ml-4 mb-1">📄 tsconfig.json</div>
+                        <div class="ml-4 mb-1">📄 vite.config.ts</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Command Buttons -->
+            <div class="flex flex-wrap gap-3 justify-center mt-8">
+                <button class="bg-dark-100 hover:bg-orange-600 text-gray-300 hover:text-white px-4 py-2 rounded-lg transition-all duration-200 font-mono text-sm">
+                    initrajs init
+                </button>
+                <button class="bg-dark-100 hover:bg-orange-600 text-gray-300 hover:text-white px-4 py-2 rounded-lg transition-all duration-200 font-mono text-sm">
+                    initrajs c ComponentName
+                </button>
+                <button class="bg-dark-100 hover:bg-orange-600 text-gray-300 hover:text-white px-4 py-2 rounded-lg transition-all duration-200 font-mono text-sm">
+                    initrajs page PageName
+                </button>
+                <button class="bg-dark-100 hover:bg-orange-600 text-gray-300 hover:text-white px-4 py-2 rounded-lg transition-all duration-200 font-mono text-sm">
+                    initrajs api ApiName
+                </button>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: CLIPlayground -->
+
+    <!-- Templates Showcase -->
+    <!-- @COMPONENT: TemplatesSection [card grid, hover effects] -->
+    <section id="templates" class="py-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold mb-4">
+                    <span class="gradient-text">Templates</span> Showcase
+                </h2>
+                <p class="text-xl text-gray-300">
+                    Production-ready templates for every project type
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- React Template -->
+                <div class="group bg-dark-200 rounded-xl p-8 border border-dark-50 hover:border-orange-500 transition-all duration-300 hover:scale-105">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fab fa-react text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-white mb-1">React Template</h3>
+                            <p class="text-gray-400 text-sm">Vite + MUI + Redux</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-3 mb-6">
+                        <div class="flex items-center text-sm text-gray-300">
+                            <i class="fas fa-check text-green-400 mr-2"></i>
+                            TypeScript & ESLint configured
+                        </div>
+                        <div class="flex items-center text-sm text-gray-300">
+                            <i class="fas fa-check text-green-400 mr-2"></i>
+                            Material-UI theming
+                        </div>
+                        <div class="flex items-center text-sm text-gray-300">
+                            <i class="fas fa-check text-green-400 mr-2"></i>
+                            Redux Toolkit setup
+                        </div>
+                        <div class="flex items-center text-sm text-gray-300">
+                            <i class="fas fa-check text-green-400 mr-2"></i>
+                            Testing with Vitest
+                        </div>
+                    </div>
+                    
+                    <button class="w-full bg-blue-600 hover:bg-blue-500 text-white py-3 rounded-lg transition-colors duration-200">
+                        Use Template
+                    </button>
+                </div>
+                
+                <!-- Next.js Template -->
+                <div class="group bg-dark-200 rounded-xl p-8 border border-dark-50 hover:border-orange-500 transition-all duration-300 hover:scale-105">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-gray-800 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-arrow-right text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-white mb-1">Next.js Template</h3>
+                            <p class="text-gray-400 text-sm">App Router + AuthContext</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-3 mb-6">
+                        <div class="flex items-center text-sm text-gray-300">
+                            <i class="fas fa-check text-green-400 mr-2"></i>
+                            App Router architecture
+                        </div>
+                        <div class="flex items-center text-sm text-gray-300">
+                            <i class="fas fa-check text-green-400 mr-2"></i>
+                            Authentication context
+                        </div>
+                        <div class="flex items-center text-sm text-gray-300">
+                            <i class="fas fa-check text-green-400 mr-2"></i>
+                            API routes setup
+                        </div>
+                        <div class="flex items-center text-sm text-gray-300">
+                            <i class="fas fa-check text-green-400 mr-2"></i>
+                            SEO optimizations
+                        </div>
+                    </div>
+                    
+                    <button class="w-full bg-gray-800 hover:bg-gray-700 text-white py-3 rounded-lg transition-colors duration-200">
+                        Use Template
+                    </button>
+                </div>
+                
+                <!-- Node.js Template -->
+                <div class="group bg-dark-200 rounded-xl p-8 border border-dark-50 hover:border-orange-500 transition-all duration-300 hover:scale-105">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fab fa-node-js text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-white mb-1">Node.js Backend</h3>
+                            <p class="text-gray-400 text-sm">Express MVC + JWT + DTOs</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-3 mb-6">
+                        <div class="flex items-center text-sm text-gray-300">
+                            <i class="fas fa-check text-green-400 mr-2"></i>
+                            MVC architecture
+                        </div>
+                        <div class="flex items-center text-sm text-gray-300">
+                            <i class="fas fa-check text-green-400 mr-2"></i>
+                            JWT authentication
+                        </div>
+                        <div class="flex items-center text-sm text-gray-300">
+                            <i class="fas fa-check text-green-400 mr-2"></i>
+                            Database integration
+                        </div>
+                        <div class="flex items-center text-sm text-gray-300">
+                            <i class="fas fa-check text-green-400 mr-2"></i>
+                            API documentation
+                        </div>
+                    </div>
+                    
+                    <button class="w-full bg-green-600 hover:bg-green-500 text-white py-3 rounded-lg transition-colors duration-200">
+                        Use Template
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: TemplatesSection -->
+
+    <!-- Roadmap Section -->
+    <!-- @COMPONENT: RoadmapSection [timeline, progress indicators] -->
+    <section id="roadmap" class="py-20 px-4 sm:px-6 lg:px-8 bg-dark-200">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold mb-4">
+                    <span class="gradient-text">Roadmap</span> & Upcoming Features
+                </h2>
+                <p class="text-xl text-gray-300">
+                    What's coming next to InitraJS
+                </p>
+            </div>
+            
+            <div class="relative">
+                <!-- Timeline Line -->
+                <div class="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-orange-500 to-orange-600"></div>
+                
+                <div class="space-y-12">
+                    <!-- In Progress -->
+                    <div class="relative flex items-start">
+                        <div class="absolute left-6 w-4 h-4 bg-orange-500 rounded-full border-4 border-dark-200"></div>
+                        <div class="ml-16">
+                            <div class="flex items-center mb-2">
+                                <h3 class="text-xl font-semibold text-white">In Progress</h3>
+                                <span class="ml-3 px-3 py-1 bg-orange-600 text-white text-xs rounded-full">Active</span>
+                            </div>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div class="flex items-center text-gray-300">
+                                    <i class="fas fa-database text-orange-400 mr-3"></i>
+                                    Prisma/MongoDB integration
+                                </div>
+                                <div class="flex items-center text-gray-300">
+                                    <i class="fab fa-docker text-orange-400 mr-3"></i>
+                                    Docker templates
+                                </div>
+                                <div class="flex items-center text-gray-300">
+                                    <i class="fas fa-cog text-orange-400 mr-3"></i>
+                                    CI/CD GitHub Actions
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Planned -->
+                    <div class="relative flex items-start">
+                        <div class="absolute left-6 w-4 h-4 bg-gray-600 rounded-full border-4 border-dark-200"></div>
+                        <div class="ml-16">
+                            <div class="flex items-center mb-2">
+                                <h3 class="text-xl font-semibold text-white">Planned</h3>
+                                <span class="ml-3 px-3 py-1 bg-gray-600 text-white text-xs rounded-full">Q2 2024</span>
+                            </div>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div class="flex items-center text-gray-300">
+                                    <i class="fas fa-project-diagram text-gray-400 mr-3"></i>
+                                    GraphQL API support
+                                </div>
+                                <div class="flex items-center text-gray-300">
+                                    <i class="fas fa-mobile-alt text-gray-400 mr-3"></i>
+                                    PWA support
+                                </div>
+                                <div class="flex items-center text-gray-300">
+                                    <i class="fas fa-puzzle-piece text-gray-400 mr-3"></i>
+                                    CLI Plugins system
+                                </div>
+                                <div class="flex items-center text-gray-300">
+                                    <i class="fas fa-layer-group text-gray-400 mr-3"></i>
+                                    Monorepo setups
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Future -->
+                    <div class="relative flex items-start">
+                        <div class="absolute left-6 w-4 h-4 bg-gray-700 rounded-full border-4 border-dark-200"></div>
+                        <div class="ml-16">
+                            <div class="flex items-center mb-2">
+                                <h3 class="text-xl font-semibold text-white">Future</h3>
+                                <span class="ml-3 px-3 py-1 bg-gray-700 text-white text-xs rounded-full">Q3-Q4 2024</span>
+                            </div>
+                            <p class="text-gray-300">
+                                Advanced testing utilities, cloud deployment integrations, 
+                                AI-powered code suggestions, and community-driven templates marketplace.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: RoadmapSection -->
+
+    <!-- Community Section -->
+    <!-- @COMPONENT: CommunitySection [social links, contribution info] -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-4">
+                Join the <span class="gradient-text">InitraJS</span> Community
+            </h2>
+            <p class="text-xl text-gray-300 mb-12">
+                Help us build the future of fullstack development tooling
+            </p>
+            
+            <div class="grid md:grid-cols-2 gap-8 mb-12">
+                <div class="bg-dark-200 rounded-xl p-8 border border-dark-50">
+                    <i class="fab fa-github text-4xl text-orange-400 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-4">Contribute</h3>
+                    <p class="text-gray-300 mb-6">
+                        Submit issues, create pull requests, and help improve InitraJS for everyone.
+                    </p>
+                    <button class="bg-orange-600 hover:bg-orange-500 text-white px-6 py-3 rounded-lg transition-colors">
+                        View GitHub
+                    </button>
+                </div>
+                
+                <div class="bg-dark-200 rounded-xl p-8 border border-dark-50">
+                    <i class="fas fa-heart text-4xl text-red-500 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-4">Support</h3>
+                    <p class="text-gray-300 mb-6">
+                        Support the project through GitHub Sponsors or Patreon to keep development active.
+                    </p>
+                    <button class="bg-red-600 hover:bg-red-500 text-white px-6 py-3 rounded-lg transition-colors">
+                        Sponsor Us
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Social Links -->
+            <div class="flex justify-center space-x-6">
+                <a href="#" class="w-12 h-12 bg-dark-200 rounded-lg flex items-center justify-center hover:bg-orange-600 transition-colors">
+                    <i class="fab fa-github text-xl"></i>
+                </a>
+                <a href="#" class="w-12 h-12 bg-dark-200 rounded-lg flex items-center justify-center hover:bg-orange-600 transition-colors">
+                    <i class="fab fa-twitter text-xl"></i>
+                </a>
+                <a href="#" class="w-12 h-12 bg-dark-200 rounded-lg flex items-center justify-center hover:bg-orange-600 transition-colors">
+                    <i class="fab fa-discord text-xl"></i>
+                </a>
+                <a href="#" class="w-12 h-12 bg-dark-200 rounded-lg flex items-center justify-center hover:bg-orange-600 transition-colors">
+                    <i class="fas fa-envelope text-xl"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: CommunitySection -->
+
+    <!-- Footer -->
+    <!-- @COMPONENT: Footer [links, copyright, creator info] -->
+    <footer class="bg-dark-100 border-t border-dark-50 py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <!-- Brand -->
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-bolt text-white text-sm"></i>
+                        </div>
+                        <span class="text-xl font-bold">InitraJS</span>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        Fullstack scaffolding CLI for modern web development. Zero config, maximum productivity.
+                    </p>
+                </div>
+                
+                <!-- Links -->
+                <div>
+                    <h4 class="font-semibold mb-4">Documentation</h4>
+                    <div class="space-y-2">
+                        <a href="#" class="block text-gray-300 hover:text-orange-400 transition-colors text-sm">Getting Started</a>
+                        <a href="#" class="block text-gray-300 hover:text-orange-400 transition-colors text-sm">CLI Reference</a>
+                        <a href="#" class="block text-gray-300 hover:text-orange-400 transition-colors text-sm">Templates</a>
+                        <a href="#" class="block text-gray-300 hover:text-orange-400 transition-colors text-sm">Examples</a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Community</h4>
+                    <div class="space-y-2">
+                        <a href="#" class="block text-gray-300 hover:text-orange-400 transition-colors text-sm">GitHub</a>
+                        <a href="#" class="block text-gray-300 hover:text-orange-400 transition-colors text-sm">Discussions</a>
+                        <a href="#" class="block text-gray-300 hover:text-orange-400 transition-colors text-sm">Discord</a>
+                        <a href="#" class="block text-gray-300 hover:text-orange-400 transition-colors text-sm">Twitter</a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Resources</h4>
+                    <div class="space-y-2">
+                        <a href="#" class="block text-gray-300 hover:text-orange-400 transition-colors text-sm">NPM Package</a>
+                        <a href="#" class="block text-gray-300 hover:text-orange-400 transition-colors text-sm">Roadmap</a>
+                        <a href="#" class="block text-gray-300 hover:text-orange-400 transition-colors text-sm">Changelog</a>
+                        <a href="#" class="block text-gray-300 hover:text-orange-400 transition-colors text-sm">Contributing</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-dark-50 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm mb-4 md:mb-0">
+                    © 2024 InitraJS. Licensed under MIT License.
+                </p>
+                <p class="text-gray-400 text-sm">
+                    Made with ❤️ by <span class="text-orange-400">Blessed Raj P</span>
+                </p>
+            </div>
+        </div>
+    </footer>
+    <!-- @END_COMPONENT: Footer -->
+
+    <script>
+        // TODO: Implement business logic, API calls, or state management
+        
+        (function() {
+            // Copy to clipboard functionality
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('[data-implementation*="Copy to clipboard"]')) {
+                    const terminalContent = e.target.closest('.terminal-window').querySelector('.font-mono').textContent;
+                    navigator.clipboard.writeText(terminalContent).then(function() {
+                        // Show success feedback
+                        const button = e.target.closest('button');
+                        const originalIcon = button.innerHTML;
+                        button.innerHTML = '<i class="fas fa-check"></i>';
+                        button.classList.add('text-green-400');
+                        
+                        setTimeout(function() {
+                            button.innerHTML = originalIcon;
+                            button.classList.remove('text-green-400');
+                        }, 2000);
+                    });
+                }
+            });
+
+            // Smooth scroll for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // CLI Playground Command Simulation
+            const commandButtons = document.querySelectorAll('button[class*="font-mono"]');
+            commandButtons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    // Simulate command execution with visual feedback
+                    button.classList.add('bg-orange-600', 'text-white');
+                    setTimeout(function() {
+                        button.classList.remove('bg-orange-600', 'text-white');
+                    }, 1000);
+                });
+            });
+
+            // Intersection Observer for scroll animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe elements for scroll animations
+            document.querySelectorAll('.group, .terminal-window').forEach(function(el) {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'all 0.6s ease-out';
+                observer.observe(el);
+            });
+        })();
+    </script>
+</body>
+</html>

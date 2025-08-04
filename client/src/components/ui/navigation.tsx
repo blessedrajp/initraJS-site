@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { Menu, X, Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import logo from "../../../public/initrajs-logo.png"
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,9 +34,9 @@ export default function Navigation() {
           <div className="flex items-center space-x-2">
             {/* InitraJS Logo */}
             <img 
-              src="/attached_assets/Untitled design_1754249144069.png" 
+              src={logo}
               alt="InitraJS Logo" 
-              className="w-8 h-8 object-contain"
+              className="w-15 h-12 object-contain"
             />
             <span className="text-xl font-bold text-foreground">InitraJS</span>
           </div>
@@ -65,14 +67,14 @@ export default function Navigation() {
             >
               Templates
             </button>
-            <button 
+            {/* <button 
               onClick={() => handleLinkClick("#roadmap")}
               className="text-muted-foreground hover:text-primary transition-colors"
             >
               Roadmap
-            </button>
+            </button> */}
             <a 
-              href="https://github.com/initrajs/initrajs" 
+              href="https://github.com/blessedrajp/initraJs" 
               target="_blank" 
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-primary transition-colors"
@@ -120,14 +122,14 @@ export default function Navigation() {
               >
                 Templates
               </button>
-              <button 
+              {/* <button 
                 onClick={() => handleLinkClick("#roadmap")}
                 className="block px-3 py-2 text-muted-foreground hover:text-primary transition-colors w-full text-left"
               >
                 Roadmap
-              </button>
+              </button> */}
               <a 
-                href="https://github.com/initrajs/initrajs" 
+                href="https://github.com/blessedrajp/initraJs" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="block px-3 py-2 text-muted-foreground hover:text-primary transition-colors"

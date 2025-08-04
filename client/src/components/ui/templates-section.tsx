@@ -1,6 +1,8 @@
 import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { useGSAP } from "@/hooks/use-gsap";
+import LottieWrapper from "@/animinations/lottieWrapper";
+import Next from '../../../public/nextImg.png'
 
 const templates = [
   {
@@ -13,7 +15,7 @@ const templates = [
       "Testing Setup"
     ],
     iconBg: "bg-primary/20",
-    iconText: "React",
+    iconText:  <LottieWrapper type='react' width={100} height={100} />,
     accent: "border-primary/30"
   },
   {
@@ -26,7 +28,7 @@ const templates = [
       "SEO Optimized"
     ],
     iconBg: "bg-white/10",
-    iconText: "Next",
+    iconText: <img src={Next} alt="" width={100} height={100}/>,
     accent: "border-white/20"
   },
   {
@@ -39,7 +41,7 @@ const templates = [
       "API Documentation"
     ],
     iconBg: "bg-primary/20",
-    iconText: "Node",
+    iconText: <LottieWrapper type='node' width={100} height={100} />,
     accent: "border-primary/30"
   }
 ];
