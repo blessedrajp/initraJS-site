@@ -48,10 +48,10 @@ export default function Navigation() {
               Features
             </button>
             <button 
-              onClick={() => handleLinkClick("#playground")}
+              onClick={() => handleLinkClick("#cli-options")}
               className="text-muted-foreground hover:text-primary transition-colors"
             >
-              Playground
+              CLI Options
             </button>
             <button 
               onClick={() => handleLinkClick("#templates")}
@@ -97,10 +97,10 @@ export default function Navigation() {
                 Features
               </button>
               <button 
-                onClick={() => handleLinkClick("#playground")}
+                onClick={() => handleLinkClick("#cli-options")}
                 className="block px-3 py-2 text-muted-foreground hover:text-primary transition-colors w-full text-left"
               >
-                Playground
+                CLI Options
               </button>
               <button 
                 onClick={() => handleLinkClick("#templates")}

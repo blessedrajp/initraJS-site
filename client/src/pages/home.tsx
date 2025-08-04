@@ -1,7 +1,7 @@
 import Navigation from "@/components/ui/navigation";
 import HeroSection from "@/components/ui/hero-section";
 import FeaturesSection from "@/components/ui/features-section";
-import PlaygroundSection from "@/components/ui/playground-section";
+import { CliOptionsSection } from "@/components/ui/cli-options-section";
 import TemplatesSection from "@/components/ui/templates-section";
 import RoadmapSection from "@/components/ui/roadmap-section";
 import CommunitySection from "@/components/ui/community-section";
@@ -15,7 +15,7 @@ export default function Home() {
       <Navigation />
       <HeroSection />
       <FeaturesSection />
-      <PlaygroundSection />
+      <CliOptionsSection />
       <TemplatesSection />
       <RoadmapSection />
       <CommunitySection />
