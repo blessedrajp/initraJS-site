@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Navigation from "@/components/ui/navigation";
 import HeroSection from "@/components/ui/hero-section";
 import FeaturesSection from "@/components/ui/features-section";
@@ -10,6 +11,17 @@ import Footer from "@/components/ui/footer";
 import ThreeBackground from "@/components/ui/three-background";
 
 export default function Home() {
+  useEffect(() => {
+    // Refresh ScrollTrigger after all sections are loaded
+    const { gsap } = window as any;
+    if (gsap && gsap.ScrollTrigger) {
+      const timer = setTimeout(() => {
+        gsap.ScrollTrigger.refresh();
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
   return (
     <div className="relative min-h-screen bg-background text-foreground overflow-x-hidden">
       <ThreeBackground />
