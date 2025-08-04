@@ -4,18 +4,34 @@ export default function ThreeBackground() {
   const mountRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
 
     let scene: any, camera: any, renderer: any, particles: any;
     let animationId: number;
+    
+    // Mouse tracking with smooth interpolation
+    let mouseX = 0;
+    let mouseY = 0;
+    let targetMouseX = 0;
+    let targetMouseY = 0;
+    
+    // Spinning motion variables
+    let baseRotationX = 0;
+    let baseRotationY = 0;
+    let baseRotationZ = 0;
 
     const init = async () => {
       try {
         // Dynamically import Three.js
-        const THREE = await import('three');
+        const THREE = await import("three");
 
         scene = new THREE.Scene();
-        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera = new THREE.PerspectiveCamera(
+          75,
+          window.innerWidth / window.innerHeight,
+          0.1,
+          1000
+        );
         renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setClearColor(0x000000, 0);
@@ -49,8 +65,14 @@ export default function ThreeBackground() {
           colorArray[i + 2] = colors[colorIndex][2];
         }
 
-        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-        particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colorArray, 3));
+        particlesGeometry.setAttribute(
+          "position",
+          new THREE.BufferAttribute(posArray, 3)
+        );
+        particlesGeometry.setAttribute(
+          "color",
+          new THREE.BufferAttribute(colorArray, 3)
+        );
 
         const particlesMaterial = new THREE.PointsMaterial({
           size: 0.8,
@@ -69,16 +91,26 @@ export default function ThreeBackground() {
         const animate = () => {
           animationId = requestAnimationFrame(animate);
 
-          // Rotate particles
-          if (particles) {
-            particles.rotation.x += 0.0005;
-            particles.rotation.y += 0.0008;
-          }
+          // Smooth mouse interpolation with easing
+          const easeAmount = 0.02;
+          mouseX += (targetMouseX - mouseX) * easeAmount;
+          mouseY += (targetMouseY - mouseY) * easeAmount;
 
-          // Move particles based on mouse position
-          if (particles && window.mouseX !== undefined && window.mouseY !== undefined) {
-            particles.rotation.x = window.mouseY * 0.00008;
-            particles.rotation.y = window.mouseX * 0.00008;
+          if (particles) {
+            // Base spinning motion like a top (360-degree rotation)
+            baseRotationX += 0.005;
+            baseRotationY += 0.008;
+            baseRotationZ += 0.003;
+
+            // Apply base rotation + mouse influence
+            particles.rotation.x = baseRotationX + mouseY * 0.0001;
+            particles.rotation.y = baseRotationY + mouseX * 0.0001;
+            particles.rotation.z = baseRotationZ;
+
+            // Add some subtle scaling effect based on mouse movement
+            const mouseDistance = Math.sqrt(mouseX * mouseX + mouseY * mouseY);
+            const scale = 1 + (mouseDistance * 0.00005);
+            particles.scale.set(scale, scale, scale);
           }
 
           renderer.render(scene, camera);
@@ -93,22 +125,22 @@ export default function ThreeBackground() {
           renderer.setSize(window.innerWidth, window.innerHeight);
         };
 
-        window.addEventListener('resize', handleResize);
+        window.addEventListener("resize", handleResize);
 
-        // Handle mouse movement
+        // Handle mouse movement with smooth targeting
         const handleMouseMove = (event: MouseEvent) => {
-          (window as any).mouseX = event.clientX - window.innerWidth / 2;
-          (window as any).mouseY = event.clientY - window.innerHeight / 2;
+          targetMouseX = event.clientX - window.innerWidth / 2;
+          targetMouseY = event.clientY - window.innerHeight / 2;
         };
 
-        document.addEventListener('mousemove', handleMouseMove);
+        document.addEventListener("mousemove", handleMouseMove);
 
         return () => {
-          window.removeEventListener('resize', handleResize);
-          document.removeEventListener('mousemove', handleMouseMove);
+          window.removeEventListener("resize", handleResize);
+          document.removeEventListener("mousemove", handleMouseMove);
         };
       } catch (error) {
-        console.log('Three.js not available, skipping 3D background');
+        console.log("Three.js not available, skipping 3D background");
       }
     };
 
@@ -118,16 +150,16 @@ export default function ThreeBackground() {
       if (animationId) {
         cancelAnimationFrame(animationId);
       }
-      if (mountRef.current && renderer) {
+      if (mountRef.current && renderer && renderer.domElement) {
         mountRef.current.removeChild(renderer.domElement);
       }
     };
   }, []);
 
   return (
-    <div 
-      ref={mountRef} 
-      className="fixed inset-0 pointer-events-none z-0" 
+    <div
+      ref={mountRef}
+      className="fixed inset-0 pointer-events-none z-0"
       style={{ opacity: 0.3 }}
     />
   );
