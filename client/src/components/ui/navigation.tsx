@@ -54,6 +54,12 @@ export default function Navigation() {
               CLI Options
             </button>
             <button 
+              onClick={() => handleLinkClick("#tutorial")}
+              className="text-muted-foreground hover:text-primary transition-colors"
+            >
+              Tutorial
+            </button>
+            <button 
               onClick={() => handleLinkClick("#templates")}
               className="text-muted-foreground hover:text-primary transition-colors"
             >
@@ -101,6 +107,12 @@ export default function Navigation() {
                 className="block px-3 py-2 text-muted-foreground hover:text-primary transition-colors w-full text-left"
               >
                 CLI Options
+              </button>
+              <button 
+                onClick={() => handleLinkClick("#tutorial")}
+                className="block px-3 py-2 text-muted-foreground hover:text-primary transition-colors w-full text-left"
+              >
+                Tutorial
               </button>
               <button 
                 onClick={() => handleLinkClick("#templates")}
