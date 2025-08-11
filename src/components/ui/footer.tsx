@@ -19,7 +19,7 @@ export default function Footer() {
               Zero Config. Maximum Productivity.
             </p>
             <p className="text-sm text-muted-foreground">
-              Made with ❤️ by Blessed Raj P
+              Made with ❤️ by  <a href="https://blessedraj.netlify.app/" className="hover:text-primary transition-colors">Blessed Raj P</a>
             </p>
           </div>
 
@@ -39,7 +39,7 @@ export default function Footer() {
               <li><a href="https://github.com/initrajs/initrajs" className="hover:text-primary transition-colors">GitHub</a></li>
               <li><a href="https://github.com/initrajs/initrajs/discussions" className="hover:text-primary transition-colors">Discussions</a></li>
               <li><a href="#" className="hover:text-primary transition-colors">Discord</a></li>
-              <li><a href="https://twitter.com/initrajs" className="hover:text-primary transition-colors">Twitter</a></li>
+              {/* <li><a href="https://twitter.com/initrajs" className="hover:text-primary transition-colors">Twitter</a></li> */}
             </ul>
           </div>
 
@@ -55,7 +55,7 @@ export default function Footer() {
 
         <div className="border-t border-border mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-muted-foreground text-sm">
-            © 2024 InitraJS. All rights reserved.
+            © 2025 InitraJS. All rights reserved.
           </p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <a href="https://github.com/initrajs/initrajs" className="text-muted-foreground hover:text-primary transition-colors">
