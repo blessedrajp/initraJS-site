@@ -50,17 +50,18 @@ export default function Navigation() {
               Features
             </button>
             <button 
-              onClick={() => handleLinkClick("#cli-options")}
-              className="text-muted-foreground hover:text-primary transition-colors"
-            >
-              CLI Options
-            </button>
-            <button 
               onClick={() => handleLinkClick("#tutorial")}
               className="text-muted-foreground hover:text-primary transition-colors"
             >
               Tutorial
             </button>
+            <button 
+              onClick={() => handleLinkClick("#cli-options")}
+              className="text-muted-foreground hover:text-primary transition-colors"
+            >
+              CLI Options
+            </button>
+            
             <button 
               onClick={() => handleLinkClick("#templates")}
               className="text-muted-foreground hover:text-primary transition-colors"

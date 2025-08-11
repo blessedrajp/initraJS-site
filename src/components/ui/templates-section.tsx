@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useGSAP } from "@/hooks/use-gsap";
 import LottieWrapper from "@/animinations/lottieWrapper";
 import Next from '../../../public/nextImg.png'
+import { handlenavigate } from "@/lib/utils";
 
 const templates = [
   {
@@ -119,6 +120,7 @@ export default function TemplatesSection() {
               <Button 
                 className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
                 variant="outline"
+                 onClick={()=>handlenavigate("#QuickStart")}
               >
                 Use Template
               </Button>

@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Terminal, Code, Zap, Settings, Target, Wrench } from "lucide-react";
+import { useCopy } from "@/hooks/use-copy";
 
 const cliOptions = [
   { option: "--ts", description: "Generate TypeScript files", usage: "initrajs c Button --ts" },
@@ -56,6 +57,7 @@ export function CliOptionsSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
   const tabsRef = useRef<HTMLDivElement>(null);
+      const { copyToClipboard } = useCopy();
 
   useGSAP(() => {
     if (!sectionRef.current || !titleRef.current || !tabsRef.current) return;
@@ -205,6 +207,7 @@ export function CliOptionsSection() {
                         variant="outline" 
                         size="sm" 
                         className="border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground"
+                         onClick={() => copyToClipboard(example.command)}
                       >
                         Try This Command
                       </Button>
@@ -212,6 +215,7 @@ export function CliOptionsSection() {
                         variant="ghost" 
                         size="sm" 
                         className="text-white/70 hover:text-white"
+                           onClick={() => copyToClipboard(example.command)}
                       >
                         Copy to Clipboard
                       </Button>
@@ -233,7 +237,7 @@ export function CliOptionsSection() {
                       <code>npm install -g initrajs</code>
                     </pre>
                   </div>
-                  <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                  <Button className="bg-primary hover:bg-primary/90 text-primary-foreground"  onClick={() => copyToClipboard("npm install -g initrajs")}>
                     Install InitraJS
                   </Button>
                 </CardContent>

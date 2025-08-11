@@ -5,16 +5,19 @@ import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useGSAP } from "@/hooks/use-gsap";
 import logo from "../../../public/initrajs-logo.png"
+import { useCopy } from "@/hooks/use-copy";
+import { handlenavigate } from "@/lib/utils";
 
 export default function HeroSection() {
-  const { toast } = useToast();
-  const [copied, setCopied] = useState(false);
+
   const heroRef = useRef<HTMLElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const buttonsRef = useRef<HTMLDivElement>(null);
   const terminalRef = useRef<HTMLDivElement>(null);
+
+    const { copied, copyToClipboard } = useCopy();
 
   useGSAP(() => {
     if (typeof window !== 'undefined' && window.gsap) {
@@ -62,30 +65,9 @@ export default function HeroSection() {
     }
   }, []);
 
-  const copyToClipboard = async (text: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      toast({
-        title: "Copied!",
-        description: "Command copied to clipboard",
-      });
-      setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      toast({
-        title: "Failed to copy",
-        description: "Please copy the command manually",
-        variant: "destructive",
-      });
-    }
-  };
 
-  const handleGetStarted = () => {
-    const element = document.querySelector("#playground");
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+
+
 
   return (
     <section ref={heroRef} className="relative min-h-screen flex items-center justify-center hero-gradient overflow-hidden pt-16">
@@ -135,7 +117,7 @@ export default function HeroSection() {
           <Button 
             size="lg"
             className="px-8 py-4 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold transition-all duration-300 hover:scale-105 orange-glow-hover"
-            onClick={handleGetStarted}
+            onClick={()=>handlenavigate("#QuickStart")}
           >
             <Rocket className="w-5 h-5 mr-2" />
             Get Started

@@ -12,6 +12,7 @@ import ThreeBackground from "@/components/ui/three-background";
 import FloatingCubes from "@/animinations/threejs/floatingcube";
 // import InteractiveWaves from "@/animinations/threejs/interactivewaves";
 import CodeRain from "@/animinations/threejs/code-rain";
+import Quickstart from "@/components/ui/quickstart";
 // import GeometricShapes from "@/animinations/threejs/geometric-shapes";
 // import ParticleField from "@/animinations/threejs/particle-field";
 
@@ -39,6 +40,8 @@ export default function Home() {
       </div>
       
       <FeaturesSection />
+
+      <Quickstart />
       
       
       <TutorialSection />
